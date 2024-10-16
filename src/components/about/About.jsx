@@ -21,13 +21,13 @@ const About = () => {
             I regularly use UI component libraries like Material UI and Ant Design to speed up development and ensure consistent design patterns.
           </p>
           <div className='flex space-x-4 mt-4  gap-[40px] ml-[0px]'>
-            <a href="https://github.com/marcemalo" target="_blank" rel="noopener noreferrer" className='text-[#cd5ff8] hover:text-white transition-colors'>
+            <a href="https://github.com/SaidislomSaidazimovv" target="_blank" rel="noopener noreferrer" className='text-[#cd5ff8] hover:text-white transition-colors'>
               <AiFillGithub size={30} />
             </a>
-            <a href="https://www.linkedin.com/in/ismoiljon-bahtiyorov/" target="_blank" rel="noopener noreferrer" className='text-[#cd5ff8] hover:text-white transition-colors'>
+            <a href="https://www.linkedin.com/in/saidislom-saidazimov-48b9a3302/" target="_blank" rel="noopener noreferrer" className='text-[#cd5ff8] hover:text-white transition-colors'>
               <BsLinkedin size={30} />
             </a>
-            <a href="https://t.me/ismoil998" target="_blank" rel="noopener noreferrer" className='text-[#cd5ff8] hover:text-white transition-colors'>
+            <a href="https://t.me/mrbDev_05" target="_blank" rel="noopener noreferrer" className='text-[#cd5ff8] hover:text-white transition-colors'>
               <SiTelegram size={30} />
             </a>
           </div>

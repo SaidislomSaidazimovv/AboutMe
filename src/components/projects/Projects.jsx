@@ -3,10 +3,6 @@ import { AiOutlineGithub } from "react-icons/ai";
 import makeUpStore from "../../assets/makeUpStore.webp";
 import ConnectedDots from "../header/ConnectedDots.jsx";
 import spotify from "../../assets/spotify.jpeg";
-import fabrx from "../../assets/fabrx.png";
-import medium from "../../assets/medium.png";
-import cargo from "../../assets/cargo.png";
-import me from "../../assets/me.png";
 
 const Projects = () => {
   return (
