@@ -55,7 +55,7 @@ const Header = () => {
 
         <div className="">
           <img
-            className="w-[450px] md:w-[500px] lg:w-[600px]"
+            className="w-[430px] md:w-[500px] lg:w-[600px]"
             src="https://my-portfolio-umber-psi-41.vercel.app/static/media/home-main.541f8179af8209ce03ccf2178fe62dbf.svg"
             alt="Banner"
           />

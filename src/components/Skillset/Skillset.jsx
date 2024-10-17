@@ -16,7 +16,7 @@ import React from 'react';
 
 const Skillset = () => {
     return (
-        <div className='bg-black py-10 py-[140px]'>
+        <div className='bg-black py-[140px]'>
             <h1 className="text-5xl font-bold text-white text-center">My <span className="text-[#cd5ff8]">Skillset</span></h1>
             <div className='max-w-[1400px] mt-[140px] grid grid-cols-4 gap-10 mx-auto'>
                 <div className="border-solid border-2 border-[#cd5ff8] p-6 w-[250px] transform transition-transform duration-500 hover:scale-110  shadow-lg shadow-[#sd5ff8] rounded-lg">
