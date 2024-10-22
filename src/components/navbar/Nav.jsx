@@ -28,7 +28,7 @@ const Nav = () => {
       }`}
     >
       <div className="max-w-[1370px] mx-auto flex justify-between items-center">
-        <h1 className="text-[#cd5ff8] text-3xl">IB.Dev</h1>
+        <h1 className="text-[#cd5ff8] text-3xl">SS.Dev</h1>
       </div>
     </div>
   );
