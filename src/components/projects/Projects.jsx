@@ -32,18 +32,11 @@ const Projects = () => {
 
             <div className="flex justify-center  mt-8">
               <a
-                href="https://github.com/SaidislomSaidazimovv/MakeUpStore.git"
-                className="flex items-center gap-2 p-2 bg-purple-700 rounded-lg hover:bg-purple-900 transition"
-              >
-                <AiOutlineGithub className="text-xl" />
-                <span>GitHub</span>
-              </a>
-              <a
                 href="https://make-up-store-ruby.vercel.app/"
                 className="flex items-center gap-2 p-2 bg-purple-700 rounded-lg hover:bg-purple-900 transition"
               >
                 <SiVercel className="text-xl" />
-                <span>Vercel</span>
+                <span>Deploy</span>
               </a>
             </div>
           </div>
@@ -58,18 +51,11 @@ const Projects = () => {
 
             <div className="flex justify-center  mt-8">
               <a
-                href="https://github.com/SaidislomSaidazimovv/Spotify.git"
-                className="flex items-center gap-2 p-2 bg-purple-700 rounded-lg hover:bg-purple-900 transition"
-              >
-                <AiOutlineGithub className="text-xl" />
-                <span>GitHub</span>
-              </a>
-              <a
                 href="https://spotify-pi-pied.vercel.app/"
                 className="flex items-center gap-2 p-2 bg-purple-700 rounded-lg hover:bg-purple-900 transition"
               >
                 <SiVercel className="text-xl" />
-                <span>Vercel</span>
+                <span>Deploy</span>
               </a>
             </div>
           </div>
