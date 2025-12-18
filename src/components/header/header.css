@@ -1,23 +1,47 @@
-@keyframes hand-wave {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(20deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  75% {
-    transform: rotate(-5deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
+.connected-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: radial-gradient(ellipse at center, rgba(18, 18, 18, 1) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
 .mave {
   display: inline-block;
-  animation: hand-wave 0.8s ease-in-out infinite;
+  animation: wave 2s ease-in-out infinite;
   transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  10%, 30% {
+    transform: rotate(14deg);
+  }
+  20%, 40% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+}
+
+.Typewriter__cursor {
+  color: #cd5ff8;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
