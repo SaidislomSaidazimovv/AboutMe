@@ -42,7 +42,7 @@ const Nav = () => {
         <div className="flex justify-between items-center">
           <div className="relative group">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] bg-clip-text text-transparent cursor-pointer">
-              SS.Dev
+              ARS.Dev
             </h1>
             <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] group-hover:w-full transition-all duration-300"></div>
           </div>

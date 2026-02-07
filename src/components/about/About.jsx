@@ -8,7 +8,7 @@ const About = () => {
   const socialLinks = [
     {
       icon: AiFillGithub,
-      href: "https://github.com/SaidislomSaidazimovv",
+      href: "https://github.com/",
       label: "GitHub",
       color: "hover:text-gray-300",
     },
@@ -20,7 +20,7 @@ const About = () => {
     },
     {
       icon: SiTelegram,
-      href: "https://t.me/mrbDev_05",
+      href: "https://t.me/arisu_stt",
       label: "Telegram",
       color: "hover:text-blue-500",
     },

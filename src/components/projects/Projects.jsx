@@ -3,7 +3,8 @@ import { AiOutlineGithub } from "react-icons/ai";
 import { HiExternalLink } from "react-icons/hi";
 import { motion } from "framer-motion";
 import makeUpStore from "../../assets/makeUpStore.webp";
-import spotify from "../../assets/spotify.jpeg";
+import weather from "../../assets/de0a5d27-8877-4411-a6d8-7ef8f0309108-cover.png";
+import paymentMethod from "../../assets/payment-method-icon-simple-element-from-economic-vector-34717818.avif"
 import ConnectedDots from "../header/ConnectedDots.jsx";
 
 const Projects = () => {
@@ -12,7 +13,7 @@ const Projects = () => {
       id: 1,
       title: "MakeUpStore",
       description:
-        "Modern e-commerce platform for makeup products with advanced filtering and cart functionality",
+        "Modern e-commerce platform for makeup products with advanced filtering and cart functionality.",
       image: makeUpStore,
       technologies: ["React", "Tailwind CSS", "Redux", "API Integration"],
       deployLink: "https://make-up-store-ruby.vercel.app/",
@@ -21,12 +22,23 @@ const Projects = () => {
     },
     {
       id: 2,
-      title: "Spotify Clone",
+      title: "Payment Method",
       description:
-        "Music streaming application clone with playlist management and audio player functionality",
-      image: spotify,
-      technologies: ["React", "Spotify API", "CSS3", "JavaScript"],
-      deployLink: "https://spotify-pi-pied.vercel.app/",
+        "A modern payment method UI designed for fintech and SaaS products, focusing on clean layout, clarity, and smooth user experience.",
+      image: paymentMethod,
+      technologies: ["React", "TailwindCSS", "JavaScript"],
+      deployLink: "https://payment-method-lake.vercel.app/",
+      githubLink: "#",
+      featured: true,
+    },
+    {
+      id: 3,
+      title: "Weather App",
+      description:
+        "A sleek and responsive weather application UI with city search, daily forecast, and modern visual design.",
+      image: weather,
+      technologies: ["HTML5", "CSS3", "JavaScript"],
+      deployLink: "https://weather-chi-woad.vercel.app/",
       githubLink: "#",
       featured: true,
     },
@@ -151,7 +163,7 @@ const Projects = () => {
           className="text-center mt-12"
         >
           <a
-            href="https://github.com/SaidislomSaidazimovv"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3 bg-transparent border-2 border-[#cd5ff8] text-[#cd5ff8] font-semibold rounded-full hover:bg-[#cd5ff8] hover:text-white transition-all duration-300 transform hover:scale-105"

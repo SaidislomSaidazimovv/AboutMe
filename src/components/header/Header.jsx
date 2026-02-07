@@ -3,7 +3,7 @@ import { Typewriter } from "react-simple-typewriter";
 import ConnectedDots from "./ConnectedDots.jsx";
 import { motion } from "framer-motion";
 import "../header/header.css";
-import cv from "../../assets/Saidazimov-Saidislom.pdf";
+import cv from "../../assets/Saidislom_Saidazimov_Modern_Resume.pdf";
 
 const Header = () => {
   return (
