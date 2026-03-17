@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ars-dev.vercel.app/sitemap.xml

@@ -1,144 +1,241 @@
-import { SiTelegram } from "react-icons/si";
+import { useEffect, useRef } from "react";
 import { BsLinkedin } from "react-icons/bs";
-import { AiFillGithub } from "react-icons/ai";
-import { motion } from "framer-motion";
-import banner from "../../assets/about.png";
+import { SiTelegram } from "react-icons/si";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "../../context/LanguageContext";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
-  const socialLinks = [
-    {
-      icon: AiFillGithub,
-      href: "https://github.com/",
-      label: "GitHub",
-      color: "hover:text-gray-300",
-    },
+  const { t } = useLanguage();
+  const sectionRef = useRef(null);
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        leftRef.current,
+        { opacity: 0, x: -40 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        }
+      );
+      gsap.fromTo(
+        rightRef.current,
+        { opacity: 0, x: 40 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.9,
+          delay: 0.15,
+          ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  const highlightBio = (bio, highlights) => {
+    let result = bio;
+    highlights.forEach((word) => {
+      result = result.replace(
+        word,
+        `<span style="color:var(--color-text);font-weight:400">${word}</span>`
+      );
+    });
+    return result;
+  };
+
+  const socials = [
     {
       icon: BsLinkedin,
       href: "https://www.linkedin.com/in/saidislom-saidazimov-48b9a3302/",
       label: "LinkedIn",
-      color: "hover:text-blue-400",
     },
     {
       icon: SiTelegram,
       href: "https://t.me/arisu_stt",
       label: "Telegram",
-      color: "hover:text-blue-500",
     },
   ];
 
-  const skills = [
-    "HTML & CSS",
-    "JavaScript & TypeScript",
-    "React.js & Next.js",
-    "Tailwind & Bootstrap",
-    "Material UI & Ant Design",
+  const infoCards = [
+    { label: "Focus", value: t.about.focus, accent: true },
+    { label: "Location", value: t.about.location, accent: false },
+    { label: "Status", value: t.about.status, accent: false, gold: true },
   ];
 
   return (
-    <section id="about" className="relative bg-gray-950 py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent"></div>
-      <div className="relative max-w-[1400px] mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+    <section
+      id="about"
+      ref={sectionRef}
+      style={{ padding: "80px 48px", background: "var(--color-bg)" }}
+    >
+      <div
+        style={{ maxWidth: "1200px", margin: "0 auto" }}
+      >
+        <p className="eyebrow" style={{ marginBottom: "16px" }}>
+          {t.about.eyebrow}
+        </p>
+        <h2 className="section-title" style={{ marginBottom: "48px" }}>
+          {t.about.title[0]}
+          <br />
+          <em>{t.about.title[1]}</em>
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "64px",
+          }}
+          className="about-grid"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            About <span className="text-[#cd5ff8]">Me</span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] mx-auto rounded-full"></div>
-        </motion.div>
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-              <p className="text-gray-300 text-lg leading-relaxed">
-                Hello everyone, I am{" "}
-                <span className="text-[#cd5ff8] font-semibold">
-                  Saidazimov Saidislom
-                </span>{" "}
-                from{" "}
-                <span className="text-[#cd5ff8] font-semibold">
-                  Tashkent, Uzbekistan
+          {/* Left */}
+          <div ref={leftRef} style={{ opacity: 0 }}>
+            <p
+              style={{
+                fontSize: "16px",
+                fontFamily: "var(--font-body)",
+                fontWeight: 300,
+                lineHeight: 1.8,
+                color: "var(--color-muted)",
+                marginBottom: "32px",
+              }}
+              dangerouslySetInnerHTML={{
+                __html: highlightBio(t.about.bio, t.about.bioHighlights),
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+              }}
+            >
+              {t.about.tags.map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    border: "1px solid rgba(201,168,76,0.2)",
+                    padding: "8px 20px",
+                    borderRadius: "2px",
+                    fontSize: "13px",
+                    color: "var(--color-gold)",
+                    letterSpacing: "0.05em",
+                    fontFamily: "var(--font-body)",
+                  }}
+                >
+                  {tag}
                 </span>
-                . I'm a 17-year-old frontend developer passionate about creating
-                beautiful and responsive web applications.
-              </p>
+              ))}
             </div>
-            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20">
-              <h3 className="text-xl font-semibold text-[#cd5ff8] mb-3">
-                My Expertise
-              </h3>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                I specialize in modern web technologies and frameworks, focusing
-                on creating seamless user experiences with clean, maintainable
-                code.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill, index) => (
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium border border-purple-500/30"
+          </div>
+
+          {/* Right */}
+          <div ref={rightRef} style={{ opacity: 0 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "16px",
+                marginBottom: "32px",
+              }}
+            >
+              {infoCards.map((card) => (
+                <div
+                  key={card.label}
+                  style={{
+                    borderLeft: card.accent
+                      ? "2px solid var(--color-gold)"
+                      : "2px solid var(--color-gold-mid)",
+                    paddingLeft: "16px",
+                    padding: "12px 16px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "11px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.2em",
+                      color: "var(--color-muted)",
+                      marginBottom: "4px",
+                      fontFamily: "var(--font-body)",
+                    }}
                   >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
+                    {card.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "15px",
+                      color: card.gold
+                        ? "var(--color-gold)"
+                        : "var(--color-text)",
+                      fontFamily: "var(--font-body)",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {card.value}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-6 pt-4">
-              <span className="text-gray-400 font-medium">
-                Connect with me:
-              </span>
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
+
+            {/* Socials */}
+            <div style={{ display: "flex", gap: "12px" }}>
+              {socials.map((s) => {
+                const Icon = s.icon;
                 return (
-                  <motion.a
-                    key={index}
-                    href={social.href}
+                  <a
+                    key={s.label}
+                    href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.2, rotate: 5 }}
-                    whileTap={{ scale: 0.9 }}
-                    className={`text-[#cd5ff8] ${social.color} transition-colors duration-300`}
-                    aria-label={social.label}
+                    aria-label={s.label}
+                    style={{
+                      width: "44px",
+                      height: "44px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "1px solid rgba(201,168,76,0.2)",
+                      borderRadius: "2px",
+                      color: "var(--color-gold)",
+                      textDecoration: "none",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "var(--color-gold)";
+                      e.currentTarget.style.background =
+                        "rgba(201,168,76,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor =
+                        "rgba(201,168,76,0.2)";
+                      e.currentTarget.style.background = "transparent";
+                    }}
                   >
-                    <Icon size={32} />
-                  </motion.a>
+                    <Icon size={18} />
+                  </a>
                 );
               })}
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
-              <div className="relative overflow-hidden rounded-2xl border-2 border-purple-500/30 group-hover:border-purple-500/60 transition-all duration-500">
-                <img
-                  className="w-full h-auto transform transition-transform duration-700 group-hover:scale-110"
-                  src={banner}
-                  alt="About Me"
-                />
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          #about { padding: 60px 24px !important; }
+          .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
+      `}</style>
     </section>
   );
 };

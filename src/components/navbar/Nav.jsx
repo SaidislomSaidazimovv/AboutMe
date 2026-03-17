@@ -1,95 +1,269 @@
-import { useState, useEffect } from "react";
-import { HiMenu, HiX } from "react-icons/hi";
-import "../navbar/nav.css";
+import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 
 const Nav = () => {
+  const { t, lang, toggle } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const ticking = useRef(false);
 
-  const handleScroll = () => {
-    const offset = window.scrollY;
-    if (offset > 50) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
+  const navKeys = ["home", "about", "skills", "projects", "contact"];
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (!ticking.current) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      setMobileMenuOpen(false);
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setMobileOpen(false);
     }
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-gray-900/95 backdrop-blur-md shadow-lg shadow-purple-500/10"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-[1400px] mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          <div className="relative group">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] bg-clip-text text-transparent cursor-pointer">
-              ARS.Dev
-            </h1>
-            <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] group-hover:w-full transition-all duration-300"></div>
-          </div>
-          <ul className="hidden md:flex items-center space-x-8">
-            {["Home", "About", "Skills", "Projects", "Contact"].map(
-              (item, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => scrollToSection(item.toLowerCase())}
-                    className="relative text-white text-lg font-medium hover:text-[#cd5ff8] transition-colors duration-300 group"
-                  >
-                    {item}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#cd5ff8] group-hover:w-full transition-all duration-300"></span>
-                  </button>
-                </li>
-              )
-            )}
-          </ul>
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0 48px",
+          height: "64px",
+          transition: "all 0.4s ease",
+          background: scrolled ? "rgba(10,10,10,0.95)" : "transparent",
+          backdropFilter: scrolled ? "blur(20px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
+          borderBottom: scrolled
+            ? "1px solid rgba(201,168,76,0.15)"
+            : "1px solid transparent",
+        }}
+      >
+        {/* Logo */}
+        <span
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "22px",
+            fontWeight: 600,
+            color: "var(--color-gold)",
+            letterSpacing: "0.05em",
+            cursor: "pointer",
+          }}
+          className="magnetic"
+          onClick={() => scrollTo("home")}
+        >
+          ARS.Dev
+        </span>
+
+        {/* Desktop links */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "32px",
+          }}
+          className="nav-desktop"
+        >
+          {navKeys.map((key) => (
+            <button
+              key={key}
+              onClick={() => scrollTo(key)}
+              style={{
+                background: "none",
+                border: "none",
+                fontFamily: "var(--font-body)",
+                fontSize: "13px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--color-muted)",
+                cursor: "pointer",
+                transition: "color 0.3s ease",
+                padding: 0,
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "var(--color-gold)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "var(--color-muted)")
+              }
+            >
+              {t.nav[key]}
+            </button>
+          ))}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-white text-3xl hover:text-[#cd5ff8] transition-colors"
+            onClick={toggle}
+            style={{
+              background: "transparent",
+              border: "1px solid var(--color-gold-mid)",
+              borderRadius: "20px",
+              padding: "6px 16px",
+              color: "var(--color-gold)",
+              fontFamily: "var(--font-body)",
+              fontSize: "12px",
+              letterSpacing: "0.08em",
+              cursor: "pointer",
+              transition: "background 0.3s ease",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = "rgba(201,168,76,0.08)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.background = "transparent")
+            }
+            className="magnetic"
           >
-            {mobileMenuOpen ? <HiX /> : <HiMenu />}
+            {lang === "en" ? "UZ" : "EN"}
           </button>
         </div>
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ${
-            mobileMenuOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
-          }`}
+
+        {/* Mobile hamburger */}
+        <button
+          className="nav-mobile-toggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          style={{
+            display: "none",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            flexDirection: "column",
+            gap: "5px",
+            padding: "4px",
+          }}
         >
-          <ul className="flex flex-col space-y-4 py-4">
-            {["Home", "About", "Skills", "Projects", "Contact"].map(
-              (item, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => scrollToSection(item.toLowerCase())}
-                    className="w-full text-left text-white text-lg font-medium hover:text-[#cd5ff8] hover:pl-4 transition-all duration-300"
-                  >
-                    {item}
-                  </button>
-                </li>
-              )
-            )}
-          </ul>
-        </div>
+          <span
+            style={{
+              display: "block",
+              width: "24px",
+              height: "1px",
+              background: "var(--color-gold)",
+              transition: "all 0.3s ease",
+              transform: mobileOpen
+                ? "rotate(45deg) translate(4px, 4px)"
+                : "none",
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: "24px",
+              height: "1px",
+              background: "var(--color-gold)",
+              transition: "all 0.3s ease",
+              opacity: mobileOpen ? 0 : 1,
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: "24px",
+              height: "1px",
+              background: "var(--color-gold)",
+              transition: "all 0.3s ease",
+              transform: mobileOpen
+                ? "rotate(-45deg) translate(4px, -4px)"
+                : "none",
+            }}
+          />
+        </button>
+      </nav>
+
+      {/* Mobile overlay */}
+      <div
+        id="mobile-menu"
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 99,
+          background: "var(--color-bg)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "32px",
+          transition: "opacity 0.4s ease, visibility 0.4s ease",
+          opacity: mobileOpen ? 1 : 0,
+          visibility: mobileOpen ? "visible" : "hidden",
+        }}
+      >
+        {navKeys.map((key) => (
+          <button
+            key={key}
+            onClick={() => scrollTo(key)}
+            style={{
+              background: "none",
+              border: "none",
+              fontFamily: "var(--font-display)",
+              fontSize: "32px",
+              fontStyle: "italic",
+              color: "var(--color-text)",
+              cursor: "pointer",
+              transition: "color 0.3s ease",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.color = "var(--color-gold)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.color = "var(--color-text)")
+            }
+          >
+            {t.nav[key]}
+          </button>
+        ))}
+        <button
+          onClick={toggle}
+          style={{
+            background: "transparent",
+            border: "1px solid var(--color-gold-mid)",
+            borderRadius: "20px",
+            padding: "8px 24px",
+            color: "var(--color-gold)",
+            fontFamily: "var(--font-body)",
+            fontSize: "14px",
+            letterSpacing: "0.08em",
+            cursor: "pointer",
+            marginTop: "16px",
+          }}
+        >
+          {lang === "en" ? "O\u2018zbek" : "English"}
+        </button>
       </div>
-    </nav>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .nav-desktop { display: none !important; }
+          .nav-mobile-toggle { display: flex !important; }
+        }
+      `}</style>
+    </>
   );
 };
 

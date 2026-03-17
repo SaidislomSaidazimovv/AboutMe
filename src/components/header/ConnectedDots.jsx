@@ -1,14 +1,15 @@
-import React, { useRef, useEffect } from "react";
-import "../header/ConnectedDots.css";
+import { useRef, useEffect } from "react";
 
 const ConnectedDots = () => {
   const canvasRef = useRef(null);
   const dotsArray = useRef([]);
   const mouseRef = useRef({ x: null, y: null, radius: 150 });
+  const animationRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -27,9 +28,9 @@ const ConnectedDots = () => {
 
     const createDots = () => {
       dotsArray.current = [];
-      const numDots = Math.floor((canvas.width * canvas.height) / 8000);
+      const numDots = Math.floor((canvas.width * canvas.height) / 10000);
       for (let i = 0; i < numDots; i++) {
-        const radius = Math.random() * 2.5 + 1;
+        const radius = Math.random() * 1.5 + 0.5;
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
         dotsArray.current.push(new Dot(x, y, radius));
@@ -43,8 +44,8 @@ const ConnectedDots = () => {
         this.radius = radius;
         this.baseX = x;
         this.baseY = y;
-        this.dx = (Math.random() - 0.5) * 0.8;
-        this.dy = (Math.random() - 0.5) * 0.8;
+        this.dx = (Math.random() - 0.5) * 0.4;
+        this.dy = (Math.random() - 0.5) * 0.4;
         this.density = Math.random() * 30 + 1;
       }
 
@@ -59,8 +60,8 @@ const ConnectedDots = () => {
           this.y,
           this.radius * 2
         );
-        gradient.addColorStop(0, "rgba(205, 95, 248, 0.8)");
-        gradient.addColorStop(1, "rgba(121, 40, 202, 0.3)");
+        gradient.addColorStop(0, "rgba(201, 168, 76, 0.6)");
+        gradient.addColorStop(1, "rgba(201, 168, 76, 0.15)");
         ctx.fillStyle = gradient;
         ctx.fill();
       }
@@ -75,15 +76,12 @@ const ConnectedDots = () => {
           const maxDistance = mouseRef.current.radius;
           const force = (maxDistance - distance) / maxDistance;
           if (distance < mouseRef.current.radius) {
-            const directionX = forceDirectionX * force * this.density;
-            const directionY = forceDirectionY * force * this.density;
-            this.x -= directionX;
-            this.y -= directionY;
+            this.x -= forceDirectionX * force * this.density;
+            this.y -= forceDirectionY * force * this.density;
           }
         }
-        const returnForce = 0.05;
-        this.x += (this.baseX - this.x) * returnForce + this.dx;
-        this.y += (this.baseY - this.y) * returnForce + this.dy;
+        this.x += (this.baseX - this.x) * 0.05 + this.dx;
+        this.y += (this.baseY - this.y) * 0.05 + this.dy;
         if (this.x < 0 || this.x > canvas.width) this.dx = -this.dx;
         if (this.y < 0 || this.y > canvas.height) this.dy = -this.dy;
         this.draw();
@@ -91,7 +89,7 @@ const ConnectedDots = () => {
     }
 
     const connectDots = () => {
-      const maxDistance = 120;
+      const maxDistance = 100;
       for (let i = 0; i < dotsArray.current.length; i++) {
         for (let j = i + 1; j < dotsArray.current.length; j++) {
           const dx = dotsArray.current[i].x - dotsArray.current[j].x;
@@ -99,8 +97,8 @@ const ConnectedDots = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < maxDistance) {
             const opacity = 1 - distance / maxDistance;
-            ctx.strokeStyle = `rgba(205, 95, 248, ${opacity * 0.3})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(201, 168, 76, ${opacity * 0.12})`;
+            ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(dotsArray.current[i].x, dotsArray.current[i].y);
             ctx.lineTo(dotsArray.current[j].x, dotsArray.current[j].y);
@@ -114,21 +112,38 @@ const ConnectedDots = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       dotsArray.current.forEach((dot) => dot.update());
       connectDots();
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     };
+
     handleResize();
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseleave", handleMouseLeave);
     animate();
+
     return () => {
+      cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="connected-dots" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 1,
+        background:
+          "radial-gradient(ellipse at center, #111111 0%, #0a0a0a 100%)",
+      }}
+    />
+  );
 };
 
 export default ConnectedDots;

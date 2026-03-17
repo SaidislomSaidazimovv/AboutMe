@@ -1,126 +1,236 @@
-import { AiOutlineDownload } from "react-icons/ai";
 import { Typewriter } from "react-simple-typewriter";
-import ConnectedDots from "./ConnectedDots.jsx";
 import { motion } from "framer-motion";
-import "../header/header.css";
+import ConnectedDots from "./ConnectedDots.jsx";
+import { useLanguage } from "../../context/LanguageContext";
 import cv from "../../assets/Saidislom_Saidazimov_Modern_Resume.pdf";
 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
+});
+
 const Header = () => {
+  const { t } = useLanguage();
+
+  const scrollToProjects = () => {
+    const el = document.getElementById("projects");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const stats = [t.hero.stat1, t.hero.stat2, t.hero.stat3];
+
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        position: "relative",
+        minHeight: "95vh",
+        display: "flex",
+        alignItems: "center",
+        overflow: "hidden",
+        padding: "80px 48px",
+      }}
     >
       <ConnectedDots />
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 py-20">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 text-center lg:text-left"
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: "1200px",
+          margin: "0 auto",
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "48px",
+          alignItems: "center",
+        }}
+        className="hero-grid"
+      >
+        {/* Left column */}
+        <div>
+          <motion.p
+            {...fadeUp(0.1)}
+            className="eyebrow"
+            style={{ marginBottom: "24px" }}
           >
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-4xl md:text-5xl font-bold text-white mb-4"
-            >
-              Hi There!{" "}
-              <motion.span
-                animate={{ rotate: [0, 14, -8, 14, 0] }}
-                transition={{ repeat: Infinity, duration: 2, delay: 1 }}
-                className="inline-block"
-              >
-                👋
-              </motion.span>
-            </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="mb-6"
-            >
-              <h2 className="text-3xl md:text-4xl text-white font-medium">
-                I'M
-              </h2>
-              <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-[#cd5ff8] via-[#bd4aea] to-[#7928ca] bg-clip-text text-transparent mt-2">
-                Saidazimov Saidislom
-              </h2>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-2xl md:text-4xl text-[#cd5ff8] font-semibold mb-8 h-16"
-            >
-              <Typewriter
-                words={[
-                  "Frontend Developer",
-                  "React Developer",
-                  "JavaScript Developer",
-                  "TypeScript Developer",
-                  "Next.js Developer",
-                ]}
-                loop={true}
-                cursor
-                cursorStyle="|"
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
-              <a
-                href={cv}
-                download="Saidazimov-Saidislom.pdf"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#cd5ff8] to-[#7928ca] text-white font-semibold rounded-full shadow-lg hover:shadow-[0_0_30px_rgba(205,95,248,0.6)] transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
-              >
-                <AiOutlineDownload className="text-xl" />
-                <span>Download CV</span>
-              </a>
-            </motion.div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex-1 flex justify-center lg:justify-end"
+            {t.hero.eyebrow}
+          </motion.p>
+
+          <motion.h1
+            {...fadeUp(0.2)}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(3rem, 6vw, 5rem)",
+              fontWeight: 300,
+              lineHeight: 1.05,
+              color: "var(--color-text)",
+              marginBottom: "8px",
+            }}
           >
-            <motion.img
-              animate={{
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="w-full max-w-[500px] lg:max-w-[600px] drop-shadow-[0_0_50px_rgba(205,95,248,0.3)]"
-              src="https://my-portfolio-umber-psi-41.vercel.app/static/media/home-main.541f8179af8209ce03ccf2178fe62dbf.svg"
-              alt="Developer illustration"
+            Saidazimov
+          </motion.h1>
+          <motion.h1
+            {...fadeUp(0.35)}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(3rem, 6vw, 5rem)",
+              fontWeight: 300,
+              fontStyle: "italic",
+              lineHeight: 1.05,
+              color: "var(--color-gold)",
+              marginBottom: "24px",
+            }}
+          >
+            Saidislom
+          </motion.h1>
+
+          <motion.div
+            {...fadeUp(0.5)}
+            style={{
+              fontSize: "16px",
+              fontFamily: "var(--font-body)",
+              fontWeight: 300,
+              color: "var(--color-muted)",
+              height: "28px",
+              marginBottom: "40px",
+            }}
+          >
+            <Typewriter
+              words={t.hero.roles}
+              loop
+              cursor
+              cursorStyle="|"
+              cursorColor="var(--color-gold)"
+              typeSpeed={80}
+              deleteSpeed={40}
+              delaySpeed={2000}
             />
           </motion.div>
+
+          <motion.div
+            {...fadeUp(0.7)}
+            style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}
+          >
+            <a
+              href={cv}
+              download="Saidazimov-Saidislom.pdf"
+              className="magnetic"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "14px 32px",
+                background: "var(--color-gold)",
+                color: "var(--color-bg)",
+                fontFamily: "var(--font-body)",
+                fontWeight: 500,
+                fontSize: "13px",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                borderRadius: "2px",
+                border: "none",
+                transition: "opacity 0.3s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              {t.hero.btn1}
+            </a>
+            <button
+              onClick={scrollToProjects}
+              className="magnetic"
+              style={{
+                padding: "14px 32px",
+                background: "transparent",
+                color: "var(--color-gold)",
+                fontFamily: "var(--font-body)",
+                fontWeight: 500,
+                fontSize: "13px",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                borderRadius: "2px",
+                border: "1px solid var(--color-gold-mid)",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(201,168,76,0.08)";
+                e.currentTarget.style.borderColor = "var(--color-gold)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "var(--color-gold-mid)";
+              }}
+            >
+              {t.hero.btn2}
+            </button>
+          </motion.div>
+        </div>
+
+        {/* Right column — stats */}
+        <div
+          className="hero-stats"
+          style={{
+            borderLeft: "1px solid rgba(201,168,76,0.15)",
+            paddingLeft: "32px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0",
+          }}
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.7,
+                delay: 0.3 + i * 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{
+                border: "1px solid var(--color-border)",
+                background: "rgba(201,168,76,0.03)",
+                padding: "24px",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "48px",
+                  fontWeight: 300,
+                  color: "var(--color-gold)",
+                  lineHeight: 1,
+                  marginBottom: "8px",
+                }}
+              >
+                {stat.num}
+              </div>
+              <div
+                style={{
+                  fontSize: "11px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-[#cd5ff8] rounded-full flex justify-center pt-2"
-        >
-          <div className="w-1.5 h-3 bg-[#cd5ff8] rounded-full"></div>
-        </motion.div>
-      </motion.div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          #home { padding: 60px 24px !important; min-height: auto !important; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .hero-stats { border-left: none !important; padding-left: 0 !important; }
+        }
+      `}</style>
     </section>
   );
 };
