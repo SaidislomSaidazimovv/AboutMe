@@ -1,26 +1,52 @@
 import { useState, useEffect, useRef } from "react";
+import { FiSun, FiMoon } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext";
+import { useTheme } from "../../context/ThemeContext";
+
+const navKeys = ["home", "about", "skills", "projects", "contact"];
 
 const Nav = () => {
-  const { t, lang, toggle } = useLanguage();
+  const { t, lang, langs, setLanguage } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [progress, setProgress] = useState(0);
   const ticking = useRef(false);
-
-  const navKeys = ["home", "about", "skills", "projects", "contact"];
 
   useEffect(() => {
     const handleScroll = () => {
       if (!ticking.current) {
         requestAnimationFrame(() => {
+          const doc = document.documentElement;
+          const max = doc.scrollHeight - doc.clientHeight;
           setScrolled(window.scrollY > 50);
+          setProgress(max > 0 ? (window.scrollY / max) * 100 : 0);
           ticking.current = false;
         });
         ticking.current = true;
       }
     };
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = navKeys
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    if (!sections.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -42,8 +68,99 @@ const Nav = () => {
     }
   };
 
+  const renderLangSwitch = (big) => (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        border: "1px solid var(--color-border)",
+        borderRadius: "100px",
+        padding: "2px",
+        gap: "2px",
+      }}
+    >
+      {langs.map((code) => {
+        const active = lang === code;
+        return (
+          <button
+            key={code}
+            onClick={() => {
+              setLanguage(code);
+              setMobileOpen(false);
+            }}
+            aria-pressed={active}
+            style={{
+              background: active ? "var(--color-accent)" : "transparent",
+              color: active ? "#ffffff" : "var(--color-muted)",
+              border: "none",
+              borderRadius: "100px",
+              padding: big ? "8px 16px" : "5px 11px",
+              fontFamily: "var(--font-body)",
+              fontSize: big ? "13px" : "11px",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              cursor: "pointer",
+              transition: "background 0.25s ease, color 0.25s ease",
+            }}
+          >
+            {code.toUpperCase()}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const renderThemeToggle = (big) => (
+    <button
+      onClick={toggleTheme}
+      aria-label="Toggle color theme"
+      className="magnetic"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: big ? "44px" : "34px",
+        height: big ? "44px" : "34px",
+        borderRadius: "50%",
+        border: "1px solid var(--color-border)",
+        background: "transparent",
+        color: "var(--color-accent)",
+        cursor: "pointer",
+        transition: "background 0.25s ease, border-color 0.25s ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "var(--color-accent-soft)";
+        e.currentTarget.style.borderColor = "var(--color-accent-mid)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "transparent";
+        e.currentTarget.style.borderColor = "var(--color-border)";
+      }}
+    >
+      {theme === "dark" ? (
+        <FiSun size={big ? 18 : 15} />
+      ) : (
+        <FiMoon size={big ? 18 : 15} />
+      )}
+    </button>
+  );
+
   return (
     <>
+      {/* Scroll progress bar */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          height: "2px",
+          width: `${progress}%`,
+          background: "var(--color-accent)",
+          zIndex: 101,
+          transition: "width 0.1s linear",
+        }}
+      />
+
       <nav
         style={{
           position: "fixed",
@@ -57,11 +174,11 @@ const Nav = () => {
           padding: "0 48px",
           height: "64px",
           transition: "all 0.4s ease",
-          background: scrolled ? "rgba(10,10,10,0.95)" : "transparent",
+          background: scrolled ? "var(--color-nav-glass)" : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
           borderBottom: scrolled
-            ? "1px solid rgba(201,168,76,0.15)"
+            ? "1px solid var(--color-border)"
             : "1px solid transparent",
         }}
       >
@@ -70,15 +187,15 @@ const Nav = () => {
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "22px",
-            fontWeight: 600,
-            color: "var(--color-gold)",
-            letterSpacing: "0.05em",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+            color: "var(--color-text)",
             cursor: "pointer",
           }}
           className="magnetic"
           onClick={() => scrollTo("home")}
         >
-          ARS.Dev
+          ARS<span style={{ color: "var(--color-accent)" }}>.dev</span>
         </span>
 
         {/* Desktop links */}
@@ -90,56 +207,44 @@ const Nav = () => {
           }}
           className="nav-desktop"
         >
-          {navKeys.map((key) => (
-            <button
-              key={key}
-              onClick={() => scrollTo(key)}
-              style={{
-                background: "none",
-                border: "none",
-                fontFamily: "var(--font-body)",
-                fontSize: "13px",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--color-muted)",
-                cursor: "pointer",
-                transition: "color 0.3s ease",
-                padding: 0,
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "var(--color-gold)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--color-muted)")
-              }
-            >
-              {t.nav[key]}
-            </button>
-          ))}
-          <button
-            onClick={toggle}
-            style={{
-              background: "transparent",
-              border: "1px solid var(--color-gold-mid)",
-              borderRadius: "20px",
-              padding: "6px 16px",
-              color: "var(--color-gold)",
-              fontFamily: "var(--font-body)",
-              fontSize: "12px",
-              letterSpacing: "0.08em",
-              cursor: "pointer",
-              transition: "background 0.3s ease",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "rgba(201,168,76,0.08)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "transparent")
-            }
-            className="magnetic"
-          >
-            {lang === "en" ? "UZ" : "EN"}
-          </button>
+          {navKeys.map((key) => {
+            const active = activeSection === key;
+            return (
+              <button
+                key={key}
+                onClick={() => scrollTo(key)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "13px",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: active
+                    ? "var(--color-accent)"
+                    : "var(--color-muted)",
+                  fontWeight: active ? 600 : 400,
+                  cursor: "pointer",
+                  transition: "color 0.3s ease",
+                  padding: 0,
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = "var(--color-accent)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = active
+                    ? "var(--color-accent)"
+                    : "var(--color-muted)")
+                }
+              >
+                {t.nav[key]}
+              </button>
+            );
+          })}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            {renderLangSwitch(false)}
+            {renderThemeToggle(false)}
+          </div>
         </div>
 
         {/* Mobile hamburger */}
@@ -214,47 +319,40 @@ const Nav = () => {
           visibility: mobileOpen ? "visible" : "hidden",
         }}
       >
-        {navKeys.map((key) => (
-          <button
-            key={key}
-            onClick={() => scrollTo(key)}
-            style={{
-              background: "none",
-              border: "none",
-              fontFamily: "var(--font-display)",
-              fontSize: "32px",
-              fontStyle: "italic",
-              color: "var(--color-text)",
-              cursor: "pointer",
-              transition: "color 0.3s ease",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.color = "var(--color-gold)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.color = "var(--color-text)")
-            }
-          >
-            {t.nav[key]}
-          </button>
-        ))}
-        <button
-          onClick={toggle}
+        {navKeys.map((key) => {
+          const active = activeSection === key;
+          return (
+            <button
+              key={key}
+              onClick={() => scrollTo(key)}
+              style={{
+                background: "none",
+                border: "none",
+                fontFamily: "var(--font-display)",
+                fontSize: "32px",
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                color: active ? "var(--color-accent)" : "var(--color-text)",
+                cursor: "pointer",
+                transition: "color 0.3s ease",
+              }}
+            >
+              {t.nav[key]}
+            </button>
+          );
+        })}
+        <div
           style={{
-            background: "transparent",
-            border: "1px solid var(--color-gold-mid)",
-            borderRadius: "20px",
-            padding: "8px 24px",
-            color: "var(--color-gold)",
-            fontFamily: "var(--font-body)",
-            fontSize: "14px",
-            letterSpacing: "0.08em",
-            cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "20px",
             marginTop: "16px",
           }}
         >
-          {lang === "en" ? "O\u2018zbek" : "English"}
-        </button>
+          {renderLangSwitch(true)}
+          {renderThemeToggle(true)}
+        </div>
       </div>
 
       <style>{`

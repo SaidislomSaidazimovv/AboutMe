@@ -1,6 +1,4 @@
 import { useEffect, useRef } from "react";
-import { BsLinkedin } from "react-icons/bs";
-import { SiTelegram } from "react-icons/si";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "../../context/LanguageContext";
@@ -52,19 +50,6 @@ const About = () => {
     });
     return result;
   };
-
-  const socials = [
-    {
-      icon: BsLinkedin,
-      href: "https://www.linkedin.com/in/saidislom-saidazimov-48b9a3302/",
-      label: "LinkedIn",
-    },
-    {
-      icon: SiTelegram,
-      href: "https://t.me/arisu_stt",
-      label: "Telegram",
-    },
-  ];
 
   const infoCards = [
     { label: "Focus", value: t.about.focus, accent: true },
@@ -124,7 +109,7 @@ const About = () => {
                 <span
                   key={tag}
                   style={{
-                    border: "1px solid rgba(201,168,76,0.2)",
+                    border: "1px solid rgba(15,157,110,0.2)",
                     padding: "8px 20px",
                     borderRadius: "2px",
                     fontSize: "13px",
@@ -186,46 +171,6 @@ const About = () => {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Socials */}
-            <div style={{ display: "flex", gap: "12px" }}>
-              {socials.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    style={{
-                      width: "44px",
-                      height: "44px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "1px solid rgba(201,168,76,0.2)",
-                      borderRadius: "2px",
-                      color: "var(--color-gold)",
-                      textDecoration: "none",
-                      transition: "all 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "var(--color-gold)";
-                      e.currentTarget.style.background =
-                        "rgba(201,168,76,0.05)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "rgba(201,168,76,0.2)";
-                      e.currentTarget.style.background = "transparent";
-                    }}
-                  >
-                    <Icon size={18} />
-                  </a>
-                );
-              })}
             </div>
           </div>
         </div>

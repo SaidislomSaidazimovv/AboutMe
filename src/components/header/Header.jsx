@@ -1,6 +1,6 @@
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
-import ConnectedDots from "./ConnectedDots.jsx";
+import Aurora from "./Aurora.jsx";
 import { useLanguage } from "../../context/LanguageContext";
 import cv from "../../assets/Saidislom_Saidazimov_Modern_Resume.pdf";
 
@@ -32,7 +32,7 @@ const Header = () => {
         padding: "80px 48px",
       }}
     >
-      <ConnectedDots />
+      <Aurora />
       <div
         style={{
           position: "relative",
@@ -62,10 +62,11 @@ const Header = () => {
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 6vw, 5rem)",
-              fontWeight: 300,
-              lineHeight: 1.05,
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.02,
               color: "var(--color-text)",
-              marginBottom: "8px",
+              marginBottom: "4px",
             }}
           >
             Saidazimov
@@ -75,10 +76,10 @@ const Header = () => {
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 6vw, 5rem)",
-              fontWeight: 300,
-              fontStyle: "italic",
-              lineHeight: 1.05,
-              color: "var(--color-gold)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.02,
+              color: "var(--color-accent)",
               marginBottom: "24px",
             }}
           >
@@ -156,7 +157,7 @@ const Header = () => {
                 transition: "all 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(201,168,76,0.08)";
+                e.currentTarget.style.background = "rgba(15,157,110,0.08)";
                 e.currentTarget.style.borderColor = "var(--color-gold)";
               }}
               onMouseLeave={(e) => {
@@ -173,7 +174,7 @@ const Header = () => {
         <div
           className="hero-stats"
           style={{
-            borderLeft: "1px solid rgba(201,168,76,0.15)",
+            borderLeft: "1px solid rgba(15,157,110,0.15)",
             paddingLeft: "32px",
             display: "flex",
             flexDirection: "column",
@@ -192,7 +193,7 @@ const Header = () => {
               }}
               style={{
                 border: "1px solid var(--color-border)",
-                background: "rgba(201,168,76,0.03)",
+                background: "rgba(15,157,110,0.03)",
                 padding: "24px",
               }}
             >

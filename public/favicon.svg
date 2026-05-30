@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Transparent background — wordmark initial mark for ARS.dev -->
+  <text x="44%" y="53%" text-anchor="middle" dominant-baseline="central"
+    font-family="DM Sans, Segoe UI, Arial, sans-serif" font-size="430" font-weight="700"
+    letter-spacing="-10" fill="#0f9d6e">A</text>
+  <circle cx="408" cy="368" r="40" fill="#0f9d6e"/>
+</svg>

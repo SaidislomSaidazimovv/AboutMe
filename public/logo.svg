@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="100" viewBox="0 0 360 100">
+  <!-- ARS.dev wordmark — transparent background -->
+  <text x="6" y="50%" dominant-baseline="central"
+    font-family="DM Sans, Segoe UI, Arial, sans-serif" font-size="68" font-weight="700"
+    letter-spacing="-3"><tspan fill="#14181a">ARS</tspan><tspan fill="#0f9d6e">.dev</tspan></text>
+</svg>

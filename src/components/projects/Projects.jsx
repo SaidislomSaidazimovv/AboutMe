@@ -2,41 +2,45 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "../../context/LanguageContext";
-import makeUpStore from "../../assets/makeUpStore.webp";
-import weather from "../../assets/weather.webp";
-import paymentMethod from "../../assets/payment-method-icon-simple-element-from-economic-vector-34717818.avif";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Pulled from the resume. Add `deployLink` (and optional `image`) once live URLs are ready.
 const projects = [
   {
     id: 1,
-    title: "MakeUpStore",
+    title: "One Night One Humanity",
+    initials: "ON",
+    year: "2026",
+    gradient: "linear-gradient(135deg, #0f9d6e 0%, #0b6e6e 100%)",
     description:
-      "Modern e-commerce platform for makeup products with advanced filtering and cart functionality.",
-    image: makeUpStore,
-    technologies: ["React", "Tailwind CSS", "Redux", "API"],
-    deployLink: "https://make-up-store-ruby.vercel.app/",
+      "Luxury event landing site for a 501(c)(3) nonprofit, built in Framer. Parallax video, scroll-triggered animations, a 23+ speaker showcase, multi-page architecture, and a custom invitation form. Featured in Daily Mail, People & Business Insider.",
+    technologies: ["Framer", "Animation", "Multi-page"],
+    deployLink: "https://onenightonehumanity.com/",
     featured: true,
   },
   {
     id: 2,
-    title: "Payment Method",
+    title: "The Butterfly Challenge",
+    initials: "TB",
+    year: "2026",
+    gradient: "linear-gradient(135deg, #1f9d55 0%, #0f7a8a 100%)",
     description:
-      "A modern payment method UI for fintech products, focusing on clean layout and smooth UX.",
-    image: paymentMethod,
-    technologies: ["React", "TailwindCSS", "JavaScript"],
-    deployLink: "https://payment-method-lake.vercel.app/",
+      "Viral mental-health awareness platform for a 501(c)(3) nonprofit — “60 Seconds. 3 Names. 24 Hours.” A 40+ component SPA with an interactive 4-step protocol, crossfading carousel, email, analytics, and error tracking.",
+    technologies: ["React", "TypeScript", "Supabase", "Vercel"],
+    deployLink: "https://thebutterflychallenge.com/",
     featured: true,
   },
   {
     id: 3,
-    title: "Weather App",
+    title: "Vizionize AI",
+    initials: "VA",
+    year: "2025",
+    gradient: "linear-gradient(135deg, #10b981 0%, #0f9d6e 100%)",
     description:
-      "A sleek weather application with city search, daily forecast, and modern visual design.",
-    image: weather,
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    deployLink: "https://weather-chi-woad.vercel.app/",
+      "Product landing page for Vizionize AI — a smart-glasses & optics-cleaner brand. Built in Framer with smooth scroll animations, an interactive FAQ, product detail tables, multi-page routing, and Stripe payments.",
+    technologies: ["Framer", "Stripe", "Landing Page"],
+    deployLink: "https://shaggy-darlings-165755.framer.app/",
     featured: true,
   },
 ];
@@ -85,166 +89,233 @@ const Projects = () => {
           <em>{t.projects.title[1]}</em>
         </h2>
 
-        <div
-          ref={cardsRef}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "24px",
-          }}
-          className="projects-grid"
-        >
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              style={{
-                background: "var(--color-bg-2)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "4px",
-                overflow: "hidden",
-                transition: "border-color 0.3s ease",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.borderColor = "var(--color-gold-mid)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.borderColor = "var(--color-border)")
-              }
-            >
-              {/* Image */}
+        {projects.length === 0 ? (
+          <div
+            style={{
+              border: "1px dashed var(--color-border)",
+              borderRadius: "8px",
+              padding: "64px 32px",
+              textAlign: "center",
+              color: "var(--color-muted)",
+              fontFamily: "var(--font-body)",
+              fontSize: "15px",
+              letterSpacing: "0.01em",
+            }}
+          >
+            {t.projects.soon}
+          </div>
+        ) : (
+          <div
+            ref={cardsRef}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "24px",
+            }}
+            className="projects-grid"
+          >
+            {projects.map((project) => (
               <div
+                key={project.id}
                 style={{
-                  height: "200px",
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "var(--color-bg-2)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "10px",
                   overflow: "hidden",
-                  position: "relative",
+                  transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "var(--color-accent-mid)";
+                  e.currentTarget.style.boxShadow =
+                    "0 12px 32px rgba(15,157,110,0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--color-border)";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                {project.featured && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "12px",
-                      right: "12px",
-                      zIndex: 2,
-                      background: "var(--color-gold)",
-                      color: "var(--color-bg)",
-                      fontSize: "11px",
-                      fontWeight: 500,
-                      padding: "4px 12px",
-                      borderRadius: "2px",
-                      letterSpacing: "0.05em",
-                      textTransform: "uppercase",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {t.projects.featured}
-                  </span>
-                )}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transition: "transform 0.5s ease",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.transform = "scale(1.03)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.transform = "scale(1)")
-                  }
-                />
-              </div>
-
-              {/* Body */}
-              <div style={{ padding: "20px 24px" }}>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                    color: "var(--color-text)",
-                    marginBottom: "8px",
-                  }}
-                >
-                  {project.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "13px",
-                    fontWeight: 300,
-                    color: "var(--color-muted)",
-                    lineHeight: 1.6,
-                    marginBottom: "16px",
-                  }}
-                >
-                  {project.description}
-                </p>
+                {/* Monogram panel (placeholder until a screenshot is added) */}
                 <div
                   style={{
+                    height: "160px",
+                    position: "relative",
+                    background: project.gradient,
                     display: "flex",
-                    flexWrap: "wrap",
-                    gap: "6px",
-                    marginBottom: "16px",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {project.technologies.map((tech) => (
+                  {project.featured && (
                     <span
-                      key={tech}
                       style={{
-                        border: "1px solid rgba(201,168,76,0.2)",
-                        padding: "4px 12px",
-                        borderRadius: "2px",
-                        fontSize: "11px",
-                        color: "var(--color-gold)",
-                        letterSpacing: "0.03em",
+                        position: "absolute",
+                        top: "12px",
+                        right: "12px",
+                        background: "rgba(255,255,255,0.92)",
+                        color: "#0b6e4f",
+                        fontSize: "10px",
+                        fontWeight: 600,
+                        padding: "4px 10px",
+                        borderRadius: "100px",
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
                         fontFamily: "var(--font-body)",
                       }}
                     >
-                      {tech}
+                      {t.projects.featured}
                     </span>
-                  ))}
+                  )}
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "14px",
+                      left: "16px",
+                      color: "rgba(255,255,255,0.8)",
+                      fontSize: "12px",
+                      fontWeight: 500,
+                      letterSpacing: "0.05em",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {project.year}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "52px",
+                      fontWeight: 700,
+                      letterSpacing: "-0.02em",
+                      color: "#ffffff",
+                    }}
+                  >
+                    {project.initials}
+                  </span>
                 </div>
-                <a
-                  href={project.deployLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+
+                {/* Body */}
+                <div
                   style={{
-                    display: "block",
-                    textAlign: "center",
-                    padding: "10px",
-                    border: "1px solid rgba(201,168,76,0.3)",
-                    borderRadius: "2px",
-                    color: "var(--color-gold)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "13px",
-                    fontWeight: 400,
-                    letterSpacing: "0.05em",
-                    textDecoration: "none",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(201,168,76,0.08)";
-                    e.currentTarget.style.borderColor = "var(--color-gold)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.borderColor =
-                      "rgba(201,168,76,0.3)";
+                    padding: "20px 24px 24px",
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
                   }}
                 >
-                  {t.projects.liveDemo}
-                </a>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "18px",
+                      fontWeight: 600,
+                      letterSpacing: "-0.02em",
+                      color: "var(--color-text)",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {project.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "13px",
+                      fontWeight: 400,
+                      color: "var(--color-muted)",
+                      lineHeight: 1.65,
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {project.description}
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "6px",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        style={{
+                          border: "1px solid var(--color-accent-dim)",
+                          background: "var(--color-accent-soft)",
+                          padding: "4px 12px",
+                          borderRadius: "100px",
+                          fontSize: "11px",
+                          color: "var(--color-accent-strong)",
+                          letterSpacing: "0.03em",
+                          fontFamily: "var(--font-body)",
+                        }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {project.deployLink ? (
+                    <a
+                      href={project.deployLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        marginTop: "auto",
+                        display: "block",
+                        textAlign: "center",
+                        padding: "10px",
+                        border: "1px solid var(--color-accent-mid)",
+                        borderRadius: "6px",
+                        color: "var(--color-accent-strong)",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        letterSpacing: "0.04em",
+                        textDecoration: "none",
+                        transition: "all 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background =
+                          "var(--color-accent-soft)";
+                        e.currentTarget.style.borderColor =
+                          "var(--color-accent)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.borderColor =
+                          "var(--color-accent-mid)";
+                      }}
+                    >
+                      {t.projects.liveDemo}
+                    </a>
+                  ) : (
+                    <span
+                      style={{
+                        marginTop: "auto",
+                        display: "block",
+                        textAlign: "center",
+                        padding: "10px",
+                        border: "1px dashed var(--color-border)",
+                        borderRadius: "6px",
+                        color: "var(--color-muted)",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "12px",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {t.projects.soonLink}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
       <style>{`
+        @media (max-width: 1024px) {
+          .projects-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
         @media (max-width: 768px) {
           #projects { padding: 60px 24px !important; }
           .projects-grid { grid-template-columns: 1fr !important; }

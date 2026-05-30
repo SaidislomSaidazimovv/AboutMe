@@ -33,7 +33,7 @@ const CustomCursor = () => {
       hovering.current = false;
       ringEl.style.width = "40px";
       ringEl.style.height = "40px";
-      ringEl.style.borderColor = "rgba(201,168,76,0.6)";
+      ringEl.style.borderColor = "rgba(15,157,110,0.6)";
       dot.style.width = "10px";
       dot.style.height = "10px";
     };
@@ -94,7 +94,7 @@ const CustomCursor = () => {
           left: 0,
           width: "40px",
           height: "40px",
-          border: "1px solid rgba(201,168,76,0.6)",
+          border: "1px solid rgba(15,157,110,0.6)",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9998,

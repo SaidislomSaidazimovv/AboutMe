@@ -81,18 +81,19 @@ const Contact = () => {
         </p>
 
         <a
-          href="mailto:saidislomsaidazimov@gmail.com"
+          href="mailto:saidazimovsaidislom97@gmail.com"
           className="gold-underline magnetic"
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(1.5rem, 3vw, 2rem)",
-            fontStyle: "italic",
-            color: "var(--color-gold)",
+            fontWeight: 600,
+            letterSpacing: "-0.02em",
+            color: "var(--color-accent)",
             textDecoration: "none",
             paddingBottom: "4px",
           }}
         >
-          saidislomsaidazimov@gmail.com
+          saidazimovsaidislom97@gmail.com
         </a>
 
         <div
@@ -118,7 +119,7 @@ const Contact = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  border: "1px solid rgba(201,168,76,0.2)",
+                  border: "1px solid rgba(15,157,110,0.2)",
                   borderRadius: "2px",
                   color: "var(--color-gold)",
                   textDecoration: "none",
@@ -126,10 +127,10 @@ const Contact = () => {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = "var(--color-gold)";
-                  e.currentTarget.style.background = "rgba(201,168,76,0.05)";
+                  e.currentTarget.style.background = "rgba(15,157,110,0.05)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(201,168,76,0.2)";
+                  e.currentTarget.style.borderColor = "rgba(15,157,110,0.2)";
                   e.currentTarget.style.background = "transparent";
                 }}
               >

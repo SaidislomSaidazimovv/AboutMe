@@ -3,16 +3,18 @@ import {
   SiVisualstudiocode,
   SiVercel,
   SiNetlify,
-  SiRedux,
   SiTypescript,
   SiTailwindcss,
-  SiBootstrap,
+  SiSupabase,
+  SiFramer,
   SiGit,
+  SiGithub,
+  SiAnthropic,
+  SiOpenai,
 } from "react-icons/si";
-import { TbBrandNextjs } from "react-icons/tb";
+import { TbBrandNextjs, TbPointer } from "react-icons/tb";
 import { GrReactjs } from "react-icons/gr";
 import { DiJsBadge } from "react-icons/di";
-import { FaSass } from "react-icons/fa";
 import { IoLogoCss3 } from "react-icons/io";
 import { AiFillHtml5 } from "react-icons/ai";
 import gsap from "gsap";
@@ -22,16 +24,16 @@ import { useLanguage } from "../../context/LanguageContext";
 gsap.registerPlugin(ScrollTrigger);
 
 const skills = [
-  { icon: AiFillHtml5, name: "HTML5", percent: 95 },
-  { icon: IoLogoCss3, name: "CSS3", percent: 90 },
-  { icon: FaSass, name: "Sass", percent: 75 },
-  { icon: SiBootstrap, name: "Bootstrap", percent: 80 },
-  { icon: SiTailwindcss, name: "Tailwind", percent: 90 },
-  { icon: DiJsBadge, name: "JavaScript", percent: 85 },
-  { icon: SiTypescript, name: "TypeScript", percent: 65 },
   { icon: GrReactjs, name: "React", percent: 90 },
-  { icon: SiRedux, name: "Redux", percent: 70 },
-  { icon: TbBrandNextjs, name: "Next.js", percent: 60 },
+  { icon: DiJsBadge, name: "JavaScript", percent: 90 },
+  { icon: SiTypescript, name: "TypeScript", percent: 70 },
+  { icon: TbBrandNextjs, name: "Next.js", percent: 70 },
+  { icon: SiTailwindcss, name: "Tailwind", percent: 90 },
+  { icon: AiFillHtml5, name: "HTML5", percent: 92 },
+  { icon: IoLogoCss3, name: "CSS3", percent: 90 },
+  { icon: SiSupabase, name: "Supabase", percent: 88 },
+  { icon: SiFramer, name: "Framer", percent: 70 },
+  { icon: SiAnthropic, name: "AI Integration", percent: 85 },
 ];
 
 const tools = [
@@ -43,6 +45,10 @@ const tools = [
   { icon: SiVercel, name: "Vercel", link: "https://vercel.com/" },
   { icon: SiNetlify, name: "Netlify", link: "https://www.netlify.com/" },
   { icon: SiGit, name: "Git", link: "https://git-scm.com/" },
+  { icon: SiGithub, name: "GitHub", link: "https://github.com/" },
+  { icon: SiAnthropic, name: "Claude Code", link: "https://claude.com/claude-code" },
+  { icon: TbPointer, name: "Cursor", link: "https://cursor.com/" },
+  { icon: SiOpenai, name: "Codex", link: "https://openai.com/codex/" },
 ];
 
 const Skillset = () => {
@@ -166,7 +172,7 @@ const Skillset = () => {
                   style={{
                     width: "100%",
                     height: "2px",
-                    background: "rgba(201,168,76,0.1)",
+                    background: "rgba(15,157,110,0.1)",
                     borderRadius: "1px",
                     marginBottom: "6px",
                   }}

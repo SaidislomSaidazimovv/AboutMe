@@ -72,7 +72,7 @@ function App() {
         </main>
         <footer
           style={{
-            borderTop: "1px solid rgba(201,168,76,0.08)",
+            borderTop: "1px solid var(--color-border)",
             padding: "24px 48px",
             display: "flex",
             justifyContent: "space-between",
@@ -85,7 +85,7 @@ function App() {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "12px",
-              color: "#444440",
+              color: "var(--color-muted)",
             }}
           >
             {t.footer.credit}
@@ -94,7 +94,7 @@ function App() {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "12px",
-              color: "#444440",
+              color: "var(--color-muted)",
             }}
           >
             &copy; {new Date().getFullYear()}

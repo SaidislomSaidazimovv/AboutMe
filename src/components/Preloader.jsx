@@ -1,137 +1,112 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Trilingual welcome that mirrors the site's EN / UZ / RU support.
+const greetings = ["Welcome", "Xush kelibsiz", "Добро пожаловать"];
+
 // eslint-disable-next-line react/prop-types
 export default function Preloader({ onComplete }) {
-  const [count, setCount] = useState(0);
-  const [done, setDone] = useState(false);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const duration = 3000;
-    const interval = 30;
-    const steps = duration / interval;
-    let current = 0;
+    if (index < greetings.length - 1) {
+      const id = setTimeout(() => setIndex((i) => i + 1), 1050);
+      return () => clearTimeout(id);
+    }
+    // Last greeting shown — hold so it can be read, then hand off to the curtain reveal.
+    const id = setTimeout(onComplete, 1000);
+    return () => clearTimeout(id);
+  }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const timer = setInterval(() => {
-      current++;
-      const progress = Math.round((current / steps) * 100);
-      setCount(Math.min(progress, 100));
-
-      if (current >= steps) {
-        clearInterval(timer);
-        setTimeout(() => {
-          setDone(true);
-          setTimeout(onComplete, 900);
-        }, 200);
-      }
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const progress = ((index + 1) / greetings.length) * 100;
 
   return (
-    <AnimatePresence>
-      {!done && (
-        <motion.div
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+    <motion.div
+      initial={{ y: 0 }}
+      exit={{ y: "-100%" }}
+      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "var(--color-bg)",
+        zIndex: 99999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "0 24px",
+      }}
+    >
+      {/* Cycling greeting */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "18px",
+        }}
+      >
+        <motion.span
+          animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
           style={{
-            position: "fixed",
-            inset: 0,
-            background: "#0A0A0A",
-            zIndex: 99999,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "40px",
+            width: "10px",
+            height: "10px",
+            borderRadius: "50%",
+            background: "var(--color-accent)",
+            flexShrink: 0,
+          }}
+        />
+        <div
+          style={{
+            position: "relative",
+            height: "1.1em",
+            overflow: "hidden",
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(1.75rem, 6vw, 3.75rem)",
+            fontWeight: 600,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.1,
           }}
         >
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "32px",
-              fontWeight: 600,
-              color: "#C9A84C",
-              letterSpacing: "0.1em",
-            }}
-          >
-            ARS.Dev
-          </motion.div>
-
-          {/* Progress bar container */}
-          <div
-            style={{
-              width: "280px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
-            {/* Bar track */}
-            <div
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, y: "100%" }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: "-100%" }}
+              transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                width: "100%",
-                height: "1px",
-                background: "rgba(201,168,76,0.15)",
-                position: "relative",
-                overflow: "hidden",
+                display: "block",
+                lineHeight: 1.1,
+                color: "var(--color-text)",
+                whiteSpace: "nowrap",
               }}
             >
-              {/* Bar fill */}
-              <motion.div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  height: "100%",
-                  background: "#C9A84C",
-                  width: `${count}%`,
-                }}
-                transition={{ ease: "linear" }}
-              />
-            </div>
+              {greetings[index]}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+      </div>
 
-            {/* Counter row */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "11px",
-                  letterSpacing: "0.25em",
-                  textTransform: "uppercase",
-                  color: "rgba(201,168,76,0.5)",
-                }}
-              >
-                Loading
-              </span>
-              <span
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "28px",
-                  fontWeight: 300,
-                  color: "#C9A84C",
-                  lineHeight: 1,
-                  minWidth: "56px",
-                  textAlign: "right",
-                }}
-              >
-                {count}%
-              </span>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      {/* Bottom accent line — fills as greetings advance */}
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          bottom: 0,
+          height: "2px",
+          width: "100%",
+          background: "var(--color-border)",
+        }}
+      >
+        <motion.div
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          style={{
+            height: "100%",
+            background: "var(--color-accent)",
+          }}
+        />
+      </div>
+    </motion.div>
   );
 }
