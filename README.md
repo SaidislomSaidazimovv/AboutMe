@@ -20,4 +20,4 @@ npm run build
 ```
 
 ## Live Site
-[https://ars-dev.vercel.app](https://ars-dev.vercel.app)
+[https://ars-dev.vercel.app](https://about-me-nine-ruby.vercel.app/)
