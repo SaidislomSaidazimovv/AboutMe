@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import { SiTelegram } from "react-icons/si";
+import { FiArrowUpRight } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "../../context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const EMAIL = "saidazimovsaidislom97@gmail.com";
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -16,16 +19,13 @@ const Contact = () => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         contentRef.current,
-        { opacity: 0, y: 60 },
+        { opacity: 0, y: 56 },
         {
           opacity: 1,
           y: 0,
           duration: 0.9,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-          },
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
         }
       );
     }, sectionRef);
@@ -38,62 +38,51 @@ const Contact = () => {
       href: "https://www.linkedin.com/in/saidislom-saidazimov-48b9a3302/",
       label: "LinkedIn",
     },
-    {
-      icon: SiTelegram,
-      href: "https://t.me/arisu_stt",
-      label: "Telegram",
-    },
+    { icon: SiTelegram, href: "https://t.me/arisu_stt", label: "Telegram" },
   ];
 
   return (
     <section
       id="contact"
       ref={sectionRef}
-      style={{
-        padding: "80px 48px",
-        background: "var(--color-bg)",
-        textAlign: "center",
-      }}
+      className="section"
+      style={{ background: "var(--color-bg-2)", overflow: "hidden" }}
     >
       <div
         ref={contentRef}
-        style={{ maxWidth: "700px", margin: "0 auto", opacity: 0 }}
+        className="container"
+        style={{ opacity: 0, textAlign: "center", position: "relative" }}
       >
-        <p className="eyebrow" style={{ marginBottom: "16px" }}>
-          {t.contact.eyebrow}
-        </p>
-        <h2 className="section-title" style={{ marginBottom: "24px" }}>
-          {t.contact.title[0]}
-          <br />
-          <em>{t.contact.title[1]}</em>
+        <h2
+          className="section-title"
+          style={{ fontSize: "clamp(2.4rem, 7vw, 4.5rem)", marginBottom: "24px" }}
+        >
+          {t.contact.title[0]} <em>{t.contact.title[1]}</em>
         </h2>
         <p
-          style={{
-            fontSize: "14px",
-            fontFamily: "var(--font-body)",
-            fontWeight: 300,
-            color: "var(--color-muted)",
-            lineHeight: 1.7,
-            marginBottom: "40px",
-          }}
+          className="lead"
+          style={{ margin: "0 auto 44px", fontWeight: 300, textAlign: "center" }}
         >
           {t.contact.sub}
         </p>
 
         <a
-          href="mailto:saidazimovsaidislom97@gmail.com"
-          className="gold-underline magnetic"
+          href={`mailto:${EMAIL}`}
+          className="email-link magnetic"
           style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "12px",
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            fontSize: "clamp(1.4rem, 3.4vw, 2.4rem)",
             fontWeight: 600,
             letterSpacing: "-0.02em",
-            color: "var(--color-accent)",
+            color: "var(--color-heading)",
             textDecoration: "none",
-            paddingBottom: "4px",
           }}
         >
-          saidazimovsaidislom97@gmail.com
+          {EMAIL}
+          <FiArrowUpRight className="email-arrow" size={28} style={{ color: "var(--color-accent)" }} />
         </a>
 
         <div
@@ -101,7 +90,7 @@ const Contact = () => {
             display: "flex",
             justifyContent: "center",
             gap: "12px",
-            marginTop: "32px",
+            marginTop: "48px",
           }}
         >
           {socials.map((s) => {
@@ -112,38 +101,33 @@ const Contact = () => {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={s.label}
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "1px solid rgba(15,157,110,0.2)",
-                  borderRadius: "2px",
-                  color: "var(--color-gold)",
-                  textDecoration: "none",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "var(--color-gold)";
-                  e.currentTarget.style.background = "rgba(15,157,110,0.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(15,157,110,0.2)";
-                  e.currentTarget.style.background = "transparent";
-                }}
+                className="chip magnetic"
+                style={{ gap: "9px", padding: "10px 20px", fontSize: "14px" }}
               >
-                <Icon size={18} />
+                <Icon size={16} />
+                {s.label}
               </a>
             );
           })}
         </div>
       </div>
       <style>{`
-        @media (max-width: 768px) {
-          #contact { padding: 60px 24px !important; }
+        .email-link { position: relative; }
+        .email-link::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -6px;
+          width: 100%;
+          height: 1.5px;
+          background: var(--color-accent);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .email-link:hover::after { transform: scaleX(1); }
+        .email-link:hover .email-arrow { transform: translate(3px, -3px); }
+        .email-arrow { transition: transform 0.3s ease; }
       `}</style>
     </section>
   );

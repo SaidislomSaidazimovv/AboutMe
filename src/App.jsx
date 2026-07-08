@@ -5,10 +5,11 @@ import Preloader from "./components/Preloader";
 import Nav from "./components/navbar/Nav";
 import Header from "./components/header/Header";
 import About from "./components/about/About";
+import Experience from "./components/experience/Experience";
 import Skillset from "./components/Skillset/Skillset";
 import Projects from "./components/projects/Projects";
+import Press from "./components/press/Press";
 import Contact from "./components/contact/Contact";
-import CustomCursor from "./components/customCursor/CustomCursor";
 import { useLanguage } from "./context/LanguageContext";
 import "./index.css";
 
@@ -48,6 +49,8 @@ function App() {
 
   return (
     <>
+      <div className="grain" aria-hidden="true" />
+
       <AnimatePresence>
         {loading && <Preloader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
@@ -57,47 +60,46 @@ function App() {
         animate={loading ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
       >
-        <CustomCursor />
         <Nav />
         <main>
           <Header />
-          <hr className="section-divider" />
           <About />
-          <hr className="section-divider" />
+          <Experience />
           <Skillset />
-          <hr className="section-divider" />
           <Projects />
-          <hr className="section-divider" />
+          <Press />
           <Contact />
         </main>
         <footer
           style={{
             borderTop: "1px solid var(--color-border)",
-            padding: "24px 48px",
+            padding: "28px var(--gutter)",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "8px",
+            gap: "10px",
+            maxWidth: "var(--container)",
+            margin: "0 auto",
           }}
         >
           <span
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "12px",
+              fontSize: "13px",
               color: "var(--color-muted)",
             }}
           >
             {t.footer.credit}
           </span>
           <span
+            className="mono-label"
             style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "12px",
-              color: "var(--color-muted)",
+              fontSize: "13px",
+              color: "var(--color-faint)",
             }}
           >
-            &copy; {new Date().getFullYear()}
+            &copy; {new Date().getFullYear()} ARS.dev
           </span>
         </footer>
       </motion.div>

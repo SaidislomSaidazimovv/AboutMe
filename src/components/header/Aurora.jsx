@@ -1,4 +1,5 @@
-// Soft, slow-moving emerald glow behind the hero — replaces the old particle network.
+// Soft, slow-moving emerald ambience behind the hero. Subtle by design — it sets a mood
+// without competing with the type. Collapses to static under reduced-motion.
 const Aurora = () => {
   return (
     <div
@@ -6,59 +7,57 @@ const Aurora = () => {
       style={{
         position: "absolute",
         inset: 0,
-        zIndex: 1,
+        zIndex: 0,
         overflow: "hidden",
-        background:
-          "radial-gradient(ellipse at 50% 40%, var(--color-bg) 0%, var(--color-bg-2) 100%)",
       }}
     >
       <span className="aurora-blob aurora-blob-1" />
       <span className="aurora-blob aurora-blob-2" />
-      <span className="aurora-blob aurora-blob-3" />
+      <span className="aurora-grid" />
 
       <style>{`
         .aurora-blob {
           position: absolute;
           border-radius: 50%;
-          filter: blur(90px);
+          filter: blur(110px);
           will-change: transform;
           pointer-events: none;
         }
         .aurora-blob-1 {
-          width: 540px;
-          height: 540px;
-          top: -140px;
-          left: -100px;
-          background: radial-gradient(circle, rgba(15,157,110,0.42) 0%, rgba(15,157,110,0) 70%);
-          animation: auroraFloat1 20s ease-in-out infinite;
+          width: 560px;
+          height: 560px;
+          top: -180px;
+          left: -120px;
+          background: radial-gradient(circle, rgba(var(--accent-rgb), 0.28) 0%, rgba(var(--accent-rgb), 0) 70%);
+          animation: auroraFloat1 22s ease-in-out infinite;
         }
         .aurora-blob-2 {
-          width: 480px;
-          height: 480px;
+          width: 460px;
+          height: 460px;
           bottom: -160px;
-          right: -80px;
-          background: radial-gradient(circle, rgba(16,185,129,0.34) 0%, rgba(16,185,129,0) 70%);
-          animation: auroraFloat2 24s ease-in-out infinite;
+          right: -60px;
+          background: radial-gradient(circle, rgba(var(--accent-rgb), 0.2) 0%, rgba(var(--accent-rgb), 0) 70%);
+          animation: auroraFloat2 26s ease-in-out infinite;
         }
-        .aurora-blob-3 {
-          width: 400px;
-          height: 400px;
-          top: 42%;
-          left: 52%;
-          background: radial-gradient(circle, rgba(11,110,110,0.26) 0%, rgba(11,110,110,0) 70%);
-          animation: auroraFloat3 28s ease-in-out infinite;
+        /* Faint blueprint grid — organizes the space, fades out toward center */
+        .aurora-grid {
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+          background-size: 64px 64px;
+          -webkit-mask-image: radial-gradient(ellipse at 30% 40%, #000 0%, transparent 72%);
+          mask-image: radial-gradient(ellipse at 30% 40%, #000 0%, transparent 72%);
+          opacity: 0.5;
         }
         @keyframes auroraFloat1 {
           0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(70px, 50px) scale(1.12); }
+          50% { transform: translate(60px, 40px) scale(1.1); }
         }
         @keyframes auroraFloat2 {
           0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-60px, -40px) scale(1.08); }
-        }
-        @keyframes auroraFloat3 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-50px, 60px) scale(1.14); }
+          50% { transform: translate(-50px, -30px) scale(1.08); }
         }
         @media (prefers-reduced-motion: reduce) {
           .aurora-blob { animation: none !important; }

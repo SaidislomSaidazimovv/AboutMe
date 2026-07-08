@@ -15,25 +15,25 @@ const About = () => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         leftRef.current,
-        { opacity: 0, x: -40 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
-          x: 0,
+          y: 0,
           duration: 0.9,
           ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%" },
         }
       );
       gsap.fromTo(
         rightRef.current,
-        { opacity: 0, x: 40 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
-          x: 0,
+          y: 0,
           duration: 0.9,
-          delay: 0.15,
+          delay: 0.12,
           ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%" },
         }
       );
     }, sectionRef);
@@ -45,140 +45,94 @@ const About = () => {
     highlights.forEach((word) => {
       result = result.replace(
         word,
-        `<span style="color:var(--color-text);font-weight:400">${word}</span>`
+        `<span style="color:var(--color-heading);font-weight:500">${word}</span>`
       );
     });
     return result;
   };
 
-  const infoCards = [
-    { label: "Focus", value: t.about.focus, accent: true },
-    { label: "Location", value: t.about.location, accent: false },
-    { label: "Status", value: t.about.status, accent: false, gold: true },
+  const details = [
+    { label: t.about.labels.focus, value: t.about.focus, accent: true },
+    { label: t.about.labels.location, value: t.about.location },
+    { label: t.about.labels.status, value: t.about.status, accent: true },
   ];
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      style={{ padding: "80px 48px", background: "var(--color-bg)" }}
-    >
+    <section id="about" ref={sectionRef} className="section">
       <div
-        style={{ maxWidth: "1200px", margin: "0 auto" }}
+        className="container about-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1.5fr 1fr",
+          gap: "72px",
+          alignItems: "start",
+        }}
       >
-        <p className="eyebrow" style={{ marginBottom: "16px" }}>
-          {t.about.eyebrow}
-        </p>
-        <h2 className="section-title" style={{ marginBottom: "48px" }}>
-          {t.about.title[0]}
-          <br />
-          <em>{t.about.title[1]}</em>
-        </h2>
+        {/* Left — statement + bio + stack */}
+        <div ref={leftRef} style={{ opacity: 0 }}>
+          <h2 className="section-title" style={{ marginBottom: "36px" }}>
+            {t.about.title[0]} <em>{t.about.title[1]}</em>
+          </h2>
+          <p
+            className="lead"
+            style={{ marginBottom: "40px", fontWeight: 300 }}
+            dangerouslySetInnerHTML={{
+              __html: highlightBio(t.about.bio, t.about.bioHighlights),
+            }}
+          />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {t.about.tags.map((tag) => (
+              <span key={tag} className="chip">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
 
+        {/* Right — detail rows, hairline-separated */}
         <div
+          ref={rightRef}
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "64px",
+            opacity: 0,
+            borderTop: "1px solid var(--color-border-strong)",
           }}
-          className="about-grid"
         >
-          {/* Left */}
-          <div ref={leftRef} style={{ opacity: 0 }}>
-            <p
-              style={{
-                fontSize: "16px",
-                fontFamily: "var(--font-body)",
-                fontWeight: 300,
-                lineHeight: 1.8,
-                color: "var(--color-muted)",
-                marginBottom: "32px",
-              }}
-              dangerouslySetInnerHTML={{
-                __html: highlightBio(t.about.bio, t.about.bioHighlights),
-              }}
-            />
+          {details.map((d) => (
             <div
+              key={d.label}
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
+                padding: "22px 4px",
+                borderBottom: "1px solid var(--color-border)",
               }}
             >
-              {t.about.tags.map((tag) => (
-                <span
-                  key={tag}
-                  style={{
-                    border: "1px solid rgba(15,157,110,0.2)",
-                    padding: "8px 20px",
-                    borderRadius: "2px",
-                    fontSize: "13px",
-                    color: "var(--color-gold)",
-                    letterSpacing: "0.05em",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
+              <div
+                style={{
+                  fontSize: "11px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  color: "var(--color-faint)",
+                  marginBottom: "8px",
+                }}
+              >
+                {d.label}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "18px",
+                  fontWeight: 500,
+                  color: d.accent ? "var(--color-accent)" : "var(--color-heading)",
+                }}
+              >
+                {d.value}
+              </div>
             </div>
-          </div>
-
-          {/* Right */}
-          <div ref={rightRef} style={{ opacity: 0 }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "16px",
-                marginBottom: "32px",
-              }}
-            >
-              {infoCards.map((card) => (
-                <div
-                  key={card.label}
-                  style={{
-                    borderLeft: card.accent
-                      ? "2px solid var(--color-gold)"
-                      : "2px solid var(--color-gold-mid)",
-                    paddingLeft: "16px",
-                    padding: "12px 16px",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.2em",
-                      color: "var(--color-muted)",
-                      marginBottom: "4px",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    {card.label}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "15px",
-                      color: card.gold
-                        ? "var(--color-gold)"
-                        : "var(--color-text)",
-                      fontFamily: "var(--font-body)",
-                      fontWeight: 400,
-                    }}
-                  >
-                    {card.value}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <style>{`
-        @media (max-width: 768px) {
-          #about { padding: 60px 24px !important; }
-          .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        @media (max-width: 860px) {
+          .about-grid { grid-template-columns: 1fr !important; gap: 44px !important; }
         }
       `}</style>
     </section>

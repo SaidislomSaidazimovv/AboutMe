@@ -1,11 +1,12 @@
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
+import { FiArrowDownRight, FiDownload } from "react-icons/fi";
 import Aurora from "./Aurora.jsx";
 import { useLanguage } from "../../context/LanguageContext";
 import cv from "../../assets/Saidislom_Saidazimov_Modern_Resume.pdf";
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 28 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
 });
@@ -23,37 +24,32 @@ const Header = () => {
   return (
     <section
       id="home"
+      className="section"
       style={{
         position: "relative",
-        minHeight: "95vh",
+        minHeight: "100dvh",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
-        padding: "80px 48px",
+        paddingTop: "96px",
       }}
     >
       <Aurora />
+
       <div
+        className="container hero-grid"
         style={{
           position: "relative",
           zIndex: 2,
-          maxWidth: "1200px",
-          margin: "0 auto",
-          width: "100%",
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "48px",
+          gridTemplateColumns: "1.55fr 1fr",
+          gap: "56px",
           alignItems: "center",
         }}
-        className="hero-grid"
       >
-        {/* Left column */}
+        {/* Left — the statement */}
         <div>
-          <motion.p
-            {...fadeUp(0.1)}
-            className="eyebrow"
-            style={{ marginBottom: "24px" }}
-          >
+          <motion.p {...fadeUp(0.1)} className="eyebrow" style={{ marginBottom: "28px" }}>
             {t.hero.eyebrow}
           </motion.p>
 
@@ -61,48 +57,35 @@ const Header = () => {
             {...fadeUp(0.2)}
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(3rem, 6vw, 5rem)",
+              fontSize: "clamp(3rem, 7.5vw, 5.75rem)",
               fontWeight: 600,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.02,
-              color: "var(--color-text)",
-              marginBottom: "4px",
-            }}
-          >
-            Saidazimov
-          </motion.h1>
-          <motion.h1
-            {...fadeUp(0.35)}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(3rem, 6vw, 5rem)",
-              fontWeight: 600,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.02,
-              color: "var(--color-accent)",
-              marginBottom: "24px",
+              letterSpacing: "-0.035em",
+              lineHeight: 0.98,
+              color: "var(--color-heading)",
             }}
           >
             Saidislom
+            <br />
+            <span style={{ color: "var(--color-accent)" }}>Saidazimov</span>
           </motion.h1>
 
           <motion.div
-            {...fadeUp(0.5)}
+            {...fadeUp(0.4)}
+            className="mono-label"
             style={{
-              fontSize: "16px",
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
+              marginTop: "22px",
+              fontSize: "clamp(1rem, 1.6vw, 1.25rem)",
+              fontWeight: 500,
               color: "var(--color-muted)",
-              height: "28px",
-              marginBottom: "40px",
+              height: "1.6em",
             }}
           >
+            <span style={{ color: "var(--color-accent)", marginRight: "10px" }}>/</span>
             <Typewriter
               words={t.hero.roles}
               loop
               cursor
-              cursorStyle="|"
-              cursorColor="var(--color-gold)"
+              cursorStyle="_"
               typeSpeed={80}
               deleteSpeed={40}
               delaySpeed={2000}
@@ -110,126 +93,115 @@ const Header = () => {
           </motion.div>
 
           <motion.div
-            {...fadeUp(0.7)}
-            style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}
+            {...fadeUp(0.58)}
+            style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "40px" }}
           >
-            <a
-              href={cv}
-              download="Saidazimov-Saidislom.pdf"
-              className="magnetic"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "14px 32px",
-                background: "var(--color-gold)",
-                color: "var(--color-bg)",
-                fontFamily: "var(--font-body)",
-                fontWeight: 500,
-                fontSize: "13px",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                borderRadius: "2px",
-                border: "none",
-                transition: "opacity 0.3s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-            >
+            <a href={cv} download="Saidislom-Saidazimov-CV.pdf" className="btn btn-primary magnetic">
+              <FiDownload size={16} />
               {t.hero.btn1}
             </a>
-            <button
-              onClick={scrollToProjects}
-              className="magnetic"
-              style={{
-                padding: "14px 32px",
-                background: "transparent",
-                color: "var(--color-gold)",
-                fontFamily: "var(--font-body)",
-                fontWeight: 500,
-                fontSize: "13px",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                borderRadius: "2px",
-                border: "1px solid var(--color-gold-mid)",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(15,157,110,0.08)";
-                e.currentTarget.style.borderColor = "var(--color-gold)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.borderColor = "var(--color-gold-mid)";
-              }}
-            >
+            <button onClick={scrollToProjects} className="btn btn-ghost magnetic">
               {t.hero.btn2}
+              <FiArrowDownRight size={16} />
             </button>
           </motion.div>
         </div>
 
-        {/* Right column — stats */}
-        <div
-          className="hero-stats"
-          style={{
-            borderLeft: "1px solid rgba(15,157,110,0.15)",
-            paddingLeft: "32px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0",
-          }}
+        {/* Right — status + stats, grouped by hairlines (no card boxes) */}
+        <motion.div
+          {...fadeUp(0.7)}
+          className="hero-side"
+          style={{ display: "flex", flexDirection: "column", gap: "4px" }}
         >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 0.7,
-                delay: 0.3 + i * 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "10px",
+              alignSelf: "flex-start",
+              padding: "8px 16px",
+              borderRadius: "var(--radius-pill)",
+              border: "1px solid var(--color-border)",
+              background: "var(--color-surface)",
+              marginBottom: "28px",
+            }}
+          >
+            <span className="pulse-dot" />
+            <span
               style={{
-                border: "1px solid var(--color-border)",
-                background: "rgba(15,157,110,0.03)",
-                padding: "24px",
+                fontSize: "12.5px",
+                fontWeight: 500,
+                color: "var(--color-text)",
+                letterSpacing: "0.01em",
               }}
             >
-              <div
+              {t.about.status}
+            </span>
+          </div>
+
+          {stats.map((stat, i) => (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                gap: "16px",
+                padding: "18px 0",
+                borderTop: "1px solid var(--color-border)",
+              }}
+            >
+              <span
+                className="mono-label"
                 style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "48px",
-                  fontWeight: 300,
-                  color: "var(--color-gold)",
+                  fontSize: "clamp(2.2rem, 4vw, 3rem)",
+                  fontWeight: 600,
+                  color: "var(--color-heading)",
                   lineHeight: 1,
-                  marginBottom: "8px",
                 }}
               >
                 {stat.num}
-              </div>
-              <div
+              </span>
+              <span
                 style={{
-                  fontSize: "11px",
+                  fontSize: "12px",
                   textTransform: "uppercase",
-                  letterSpacing: "0.2em",
+                  letterSpacing: "0.14em",
                   color: "var(--color-muted)",
-                  fontFamily: "var(--font-body)",
+                  textAlign: "right",
+                  maxWidth: "10ch",
                 }}
               >
                 {stat.label}
-              </div>
-            </motion.div>
+              </span>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <style>{`
+        .pulse-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--color-accent);
+          box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5);
+          animation: pulseDot 2.2s ease-out infinite;
+        }
+        @keyframes pulseDot {
+          0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5); }
+          70% { box-shadow: 0 0 0 8px rgba(var(--accent-rgb), 0); }
+          100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .pulse-dot { animation: none !important; }
+        }
+        @media (max-width: 860px) {
+          .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .hero-side { max-width: 420px; }
+        }
         @media (max-width: 768px) {
-          #home { padding: 60px 24px !important; min-height: auto !important; }
-          .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .hero-stats { border-left: none !important; padding-left: 0 !important; }
+          #home { min-height: auto !important; padding-top: 120px !important; }
         }
       `}</style>
     </section>

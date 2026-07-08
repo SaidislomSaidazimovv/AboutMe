@@ -23,25 +23,37 @@ import { useLanguage } from "../../context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skills = [
-  { icon: GrReactjs, name: "React", percent: 90 },
-  { icon: DiJsBadge, name: "JavaScript", percent: 90 },
-  { icon: SiTypescript, name: "TypeScript", percent: 70 },
-  { icon: TbBrandNextjs, name: "Next.js", percent: 70 },
-  { icon: SiTailwindcss, name: "Tailwind", percent: 90 },
-  { icon: AiFillHtml5, name: "HTML5", percent: 92 },
-  { icon: IoLogoCss3, name: "CSS3", percent: 90 },
-  { icon: SiSupabase, name: "Supabase", percent: 88 },
-  { icon: SiFramer, name: "Framer", percent: 70 },
-  { icon: SiAnthropic, name: "AI Integration", percent: 85 },
+// Grouped by discipline instead of arbitrary percentage bars.
+const groups = [
+  {
+    key: "frontend",
+    items: [
+      { icon: GrReactjs, name: "React" },
+      { icon: TbBrandNextjs, name: "Next.js" },
+      { icon: SiTypescript, name: "TypeScript" },
+      { icon: DiJsBadge, name: "JavaScript" },
+    ],
+  },
+  {
+    key: "craft",
+    items: [
+      { icon: SiTailwindcss, name: "Tailwind" },
+      { icon: IoLogoCss3, name: "CSS3" },
+      { icon: AiFillHtml5, name: "HTML5" },
+      { icon: SiFramer, name: "Framer Motion" },
+    ],
+  },
+  {
+    key: "platform",
+    items: [
+      { icon: SiSupabase, name: "Supabase" },
+      { icon: SiAnthropic, name: "AI Integration" },
+    ],
+  },
 ];
 
 const tools = [
-  {
-    icon: SiVisualstudiocode,
-    name: "VS Code",
-    link: "https://code.visualstudio.com/",
-  },
+  { icon: SiVisualstudiocode, name: "VS Code", link: "https://code.visualstudio.com/" },
   { icon: SiVercel, name: "Vercel", link: "https://vercel.com/" },
   { icon: SiNetlify, name: "Netlify", link: "https://www.netlify.com/" },
   { icon: SiGit, name: "Git", link: "https://git-scm.com/" },
@@ -54,228 +66,164 @@ const tools = [
 const Skillset = () => {
   const { t } = useLanguage();
   const sectionRef = useRef(null);
-  const cardsRef = useRef(null);
-  const barsRef = useRef([]);
+  const rowsRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (cardsRef.current) {
+      if (rowsRef.current) {
         gsap.fromTo(
-          cardsRef.current.children,
+          rowsRef.current.children,
           { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.06,
+            duration: 0.7,
+            stagger: 0.1,
             ease: "power3.out",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 75%",
-            },
+            scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
           }
         );
       }
-      barsRef.current.forEach((bar, i) => {
-        if (!bar) return;
-        gsap.fromTo(
-          bar,
-          { width: "0%" },
-          {
-            width: `${skills[i].percent}%`,
-            duration: 1,
-            delay: i * 0.05,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 75%",
-            },
-          }
-        );
-      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  const cardStyle = {
-    background: "var(--color-bg-2)",
-    border: "1px solid var(--color-border)",
-    borderRadius: "4px",
-    padding: "24px 16px",
-    textAlign: "center",
-    transition: "all 0.3s ease",
-    cursor: "default",
-  };
+  const toolLoop = [...tools, ...tools];
 
   return (
     <section
       id="skills"
       ref={sectionRef}
-      style={{ padding: "80px 48px", background: "var(--color-bg)" }}
+      className="section"
+      style={{ background: "var(--color-bg-2)" }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <p className="eyebrow" style={{ marginBottom: "16px" }}>
-          {t.skills.eyebrow}
-        </p>
-        <h2 className="section-title" style={{ marginBottom: "48px" }}>
-          {t.skills.title[0]}
-          <br />
-          <em>{t.skills.title[1]}</em>
+      <div className="container">
+        <h2 className="section-title" style={{ marginBottom: "56px", maxWidth: "16ch" }}>
+          {t.skills.title[0]} <em>{t.skills.title[1]}</em>
         </h2>
 
-        <div
-          ref={cardsRef}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: "16px",
-            marginBottom: "48px",
-          }}
-          className="skills-grid"
-        >
-          {skills.map((skill, i) => {
-            const Icon = skill.icon;
-            return (
+        {/* Grouped skill rows — label | items, hairline separated */}
+        <div ref={rowsRef} style={{ borderTop: "1px solid var(--color-border-strong)" }}>
+          {groups.map((group) => (
+            <div
+              key={group.key}
+              className="skill-row"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "220px 1fr",
+                gap: "32px",
+                alignItems: "center",
+                padding: "28px 0",
+                borderBottom: "1px solid var(--color-border)",
+              }}
+            >
               <div
-                key={skill.name}
-                style={cardStyle}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "var(--color-gold-mid)";
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "var(--color-border)";
-                  e.currentTarget.style.transform = "translateY(0)";
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "13px",
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.16em",
+                  color: "var(--color-muted)",
                 }}
               >
-                <Icon
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    color: "var(--color-text)",
-                    margin: "0 auto 12px",
-                    display: "block",
-                  }}
-                />
-                <div
-                  style={{
-                    fontSize: "14px",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 400,
-                    color: "var(--color-text)",
-                    marginBottom: "12px",
-                  }}
-                >
-                  {skill.name}
-                </div>
-                <div
-                  style={{
-                    width: "100%",
-                    height: "2px",
-                    background: "rgba(15,157,110,0.1)",
-                    borderRadius: "1px",
-                    marginBottom: "6px",
-                  }}
-                >
-                  <div
-                    ref={(el) => (barsRef.current[i] = el)}
-                    style={{
-                      height: "100%",
-                      background: "var(--color-gold)",
-                      borderRadius: "1px",
-                      width: "0%",
-                    }}
-                  />
-                </div>
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "var(--color-gold)",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {skill.percent}%
-                </div>
+                {t.skills.categories[group.key]}
               </div>
-            );
-          })}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                {group.items.map(({ icon: Icon, name }) => (
+                  <span
+                    key={name}
+                    className="chip"
+                    style={{ gap: "9px", padding: "9px 16px", fontSize: "14px" }}
+                  >
+                    <Icon size={18} style={{ color: "var(--color-accent)" }} />
+                    {name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Tools */}
-        <h3
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "1.5rem",
-            fontWeight: 300,
-            color: "var(--color-text)",
-            marginBottom: "24px",
-          }}
-        >
-          <em style={{ color: "var(--color-gold)" }}>{t.skills.toolsTitle}</em>
-        </h3>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "16px",
-            maxWidth: "600px",
-          }}
-          className="tools-grid"
-        >
-          {tools.map((tool) => {
-            const Icon = tool.icon;
-            return (
-              <a
-                key={tool.name}
-                href={tool.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  ...cardStyle,
-                  textDecoration: "none",
-                  display: "block",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "var(--color-gold-mid)";
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "var(--color-border)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                <Icon
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    color: "var(--color-text)",
-                    margin: "0 auto 12px",
-                    display: "block",
-                  }}
-                />
-                <div
-                  style={{
-                    fontSize: "14px",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 400,
-                    color: "var(--color-text)",
-                  }}
-                >
-                  {tool.name}
-                </div>
-              </a>
-            );
-          })}
+        {/* Tools — a single restrained marquee for breadth */}
+        <div style={{ marginTop: "48px" }}>
+          <div
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "13px",
+              fontWeight: 500,
+              textTransform: "uppercase",
+              letterSpacing: "0.16em",
+              color: "var(--color-muted)",
+              marginBottom: "20px",
+            }}
+          >
+            {t.skills.toolsTitle}
+          </div>
+          <div className="tool-marquee">
+            <div className="tool-track">
+              {toolLoop.map((tool, i) => {
+                const Icon = tool.icon;
+                return (
+                  <a
+                    key={`${tool.name}-${i}`}
+                    href={tool.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-hidden={i >= tools.length ? "true" : undefined}
+                    tabIndex={i >= tools.length ? -1 : undefined}
+                    className="tool-item"
+                  >
+                    <Icon size={20} />
+                    {tool.name}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
+
       <style>{`
-        @media (max-width: 1024px) {
-          .skills-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        .tool-marquee {
+          overflow: hidden;
+          position: relative;
+          -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
         }
-        @media (max-width: 768px) {
-          #skills { padding: 60px 24px !important; }
-          .skills-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .tools-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        .tool-track {
+          display: flex;
+          gap: 14px;
+          width: max-content;
+          animation: toolScroll 32s linear infinite;
+        }
+        .tool-marquee:hover .tool-track { animation-play-state: paused; }
+        .tool-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          flex-shrink: 0;
+          padding: 12px 20px;
+          border-radius: var(--radius-pill);
+          border: 1px solid var(--color-border);
+          background: var(--color-surface);
+          color: var(--color-text);
+          font-family: var(--font-body);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          transition: color 0.25s ease, border-color 0.25s ease;
+        }
+        .tool-item:hover { color: var(--color-accent); border-color: var(--color-accent-mid); }
+        @keyframes toolScroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .tool-track { animation: none !important; flex-wrap: wrap; }
+        }
+        @media (max-width: 640px) {
+          .skill-row { grid-template-columns: 1fr !important; gap: 14px !important; }
         }
       `}</style>
     </section>

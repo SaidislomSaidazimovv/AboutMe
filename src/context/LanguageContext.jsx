@@ -5,12 +5,13 @@ const translations = {
     nav: {
       home: "Home",
       about: "About",
+      experience: "Experience",
       skills: "Skills",
       projects: "Projects",
       contact: "Contact",
     },
     hero: {
-      eyebrow: "Frontend Developer & AI Engineer \u2014 Tashkent, Uzbekistan",
+      eyebrow: "Frontend Developer & AI Engineer \u00b7 Tashkent",
       roles: [
         "Frontend Developer",
         "AI Engineer",
@@ -32,6 +33,7 @@ const translations = {
       focus: "Frontend & AI Engineering",
       location: "Tashkent, Uzbekistan",
       status: "Open to opportunities",
+      labels: { focus: "Focus", location: "Location", status: "Status" },
       tags: [
         "React",
         "Next.js",
@@ -47,19 +49,57 @@ const translations = {
       eyebrow: "Technical Skills",
       title: ["Technologies I", "work with"],
       toolsTitle: "Tools",
+      categories: {
+        frontend: "Frontend",
+        craft: "Styling & Motion",
+        platform: "Backend & AI",
+      },
     },
     projects: {
       eyebrow: "Selected Work",
       title: ["My Recent", "Projects"],
       liveDemo: "Live Demo",
       featured: "Featured",
-      soon: "New projects coming soon — stay tuned.",
+      soon: "New projects coming soon. Stay tuned.",
       soonLink: "Live link coming soon",
     },
     contact: {
       eyebrow: "Get in Touch",
       title: ["Let\u2019s build", "something together"],
       sub: "I\u2019m always open to new opportunities, collaborations, or just a friendly chat.",
+    },
+    experience: {
+      title: ["Experience &", "education"],
+      now: "Now",
+      items: [
+        {
+          period: "Aug 2025 - Present",
+          role: "Frontend Developer & AI Engineer",
+          org: "Freelance / Self-employed",
+          location: "Tashkent",
+          current: true,
+          desc: "Shipped 5+ production web apps with React, Next.js, TypeScript and Tailwind. Built AI-powered features with Claude, Gemini and Groq, plus full-stack apps on Supabase and Vercel.",
+        },
+        {
+          period: "Feb 2026 - Present",
+          role: "Volunteer, Web & Design",
+          org: "One Humanity Foundation",
+          location: "Remote",
+          current: true,
+          desc: "Supporting a global 501(c)(3) humanitarian foundation with web and design work.",
+        },
+        {
+          period: "Nov 2023 - Oct 2024",
+          role: "Computer Software Engineering",
+          org: "Najot Ta'lim",
+          location: "Tashkent",
+          current: false,
+          desc: "Frontend-focused program: HTML, CSS, JavaScript, TypeScript, React, Git, and UI/UX. Completed with a Frontend Development Certificate (2024).",
+        },
+      ],
+    },
+    press: {
+      title: "Featured in",
     },
     footer: {
       credit: "Designed & developed by Saidazimov Saidislom",
@@ -69,12 +109,13 @@ const translations = {
     nav: {
       home: "Bosh sahifa",
       about: "Men haqimda",
+      experience: "Tajriba",
       skills: "Ko\u2018nikmalar",
       projects: "Loyihalar",
       contact: "Aloqa",
     },
     hero: {
-      eyebrow: "Frontend Dasturchi & AI Muhandis \u2014 Toshkent, O\u2018zbekiston",
+      eyebrow: "Frontend Dasturchi & AI Muhandis \u00b7 Toshkent",
       roles: [
         "Frontend Dasturchi",
         "AI Muhandis",
@@ -96,6 +137,7 @@ const translations = {
       focus: "Frontend va AI Muhandisligi",
       location: "Toshkent, O\u2018zbekiston",
       status: "Ish takliflariga ochiqman",
+      labels: { focus: "Yo\u2018nalish", location: "Manzil", status: "Holat" },
       tags: [
         "React",
         "Next.js",
@@ -111,6 +153,11 @@ const translations = {
       eyebrow: "Texnik Ko\u2018nikmalar",
       title: ["Ishlatadigan", "Texnologiyalarim"],
       toolsTitle: "Asboblar",
+      categories: {
+        frontend: "Frontend",
+        craft: "Dizayn & Animatsiya",
+        platform: "Backend & AI",
+      },
     },
     projects: {
       eyebrow: "Tanlangan Ishlar",
@@ -125,6 +172,39 @@ const translations = {
       title: ["Keling, birgalikda", "quraylik"],
       sub: "Yangi imkoniyatlar, hamkorlik yoki shunchaki suhbat uchun murojaat qiling.",
     },
+    experience: {
+      title: ["Tajriba va", "ta'lim"],
+      now: "Hozir",
+      items: [
+        {
+          period: "Aug 2025 - Hozir",
+          role: "Frontend Dasturchi & AI Muhandis",
+          org: "Frilanser / O‘z ishi",
+          location: "Toshkent",
+          current: true,
+          desc: "React, Next.js, TypeScript va Tailwind bilan 5+ ishlab chiqarish darajasidagi veb-ilova yaratdim. Claude, Gemini va Groq bilan AI funksiyalar, Supabase va Vercel’da full-stack ilovalar qurdim.",
+        },
+        {
+          period: "Feb 2026 - Hozir",
+          role: "Ko‘ngilli, Veb & Dizayn",
+          org: "One Humanity Foundation",
+          location: "Masofaviy",
+          current: true,
+          desc: "Global 501(c)(3) insonparvarlik jamg‘armasiga veb va dizayn ishlarida yordam beraman.",
+        },
+        {
+          period: "Nov 2023 - Oct 2024",
+          role: "Kompyuter Dasturiy Injiniringi",
+          org: "Najot Ta'lim",
+          location: "Toshkent",
+          current: false,
+          desc: "Frontend yo‘nalishiga ixtisoslashgan dastur: HTML, CSS, JavaScript, TypeScript, React, Git va UI/UX. Frontend Development sertifikati bilan yakunlandi (2024).",
+        },
+      ],
+    },
+    press: {
+      title: "Matbuotda yoritilgan",
+    },
     footer: {
       credit: "Saidazimov Saidislom tomonidan ishlab chiqilgan",
     },
@@ -133,12 +213,13 @@ const translations = {
     nav: {
       home: "Главная",
       about: "Обо мне",
+      experience: "Опыт",
       skills: "Навыки",
       projects: "Проекты",
       contact: "Контакты",
     },
     hero: {
-      eyebrow: "Frontend-разработчик и AI-инженер — Ташкент, Узбекистан",
+      eyebrow: "Frontend-разработчик и AI-инженер · Ташкент",
       roles: [
         "Frontend-разработчик",
         "AI-инженер",
@@ -155,11 +236,12 @@ const translations = {
     about: {
       eyebrow: "Обо мне",
       title: ["Создаю интерфейсы,", "которые любят"],
-      bio: "Я frontend-разработчик и AI-инженер из Ташкента. Увлечён созданием быстрых, элегантных веб-интерфейсов и умных приложений на основе ИИ. Чистый код и продуманный дизайн — мои приоритеты.",
+      bio: "Я frontend-разработчик и AI-инженер из Ташкента. Увлечён созданием быстрых, элегантных веб-интерфейсов и умных приложений на основе ИИ. Для меня в приоритете чистый код и продуманный дизайн.",
       bioHighlights: ["frontend-разработчик и AI-инженер", "Ташкента"],
       focus: "Frontend и AI-инженерия",
       location: "Ташкент, Узбекистан",
       status: "Открыт к предложениям",
+      labels: { focus: "Направление", location: "Локация", status: "Статус" },
       tags: [
         "React",
         "Next.js",
@@ -175,6 +257,11 @@ const translations = {
       eyebrow: "Технические навыки",
       title: ["Технологии,", "с которыми работаю"],
       toolsTitle: "Инструменты",
+      categories: {
+        frontend: "Frontend",
+        craft: "Стили и анимация",
+        platform: "Backend и AI",
+      },
     },
     projects: {
       eyebrow: "Избранные работы",
@@ -188,6 +275,39 @@ const translations = {
       eyebrow: "Связаться",
       title: ["Давайте создадим", "что-то вместе"],
       sub: "Я всегда открыт к новым возможностям, сотрудничеству или просто дружеской беседе.",
+    },
+    experience: {
+      title: ["Опыт и", "образование"],
+      now: "Сейчас",
+      items: [
+        {
+          period: "Aug 2025 - н.в.",
+          role: "Frontend-разработчик и AI-инженер",
+          org: "Фриланс / Самозанятость",
+          location: "Ташкент",
+          current: true,
+          desc: "Выпустил 5+ производственных веб-приложений на React, Next.js, TypeScript и Tailwind. Создавал AI-функции с Claude, Gemini и Groq, а также full-stack приложения на Supabase и Vercel.",
+        },
+        {
+          period: "Feb 2026 - н.в.",
+          role: "Волонтёр, веб и дизайн",
+          org: "One Humanity Foundation",
+          location: "Удалённо",
+          current: true,
+          desc: "Помогаю глобальному гуманитарному фонду 501(c)(3) в веб-разработке и дизайне.",
+        },
+        {
+          period: "Nov 2023 - Oct 2024",
+          role: "Разработка программного обеспечения",
+          org: "Najot Ta'lim",
+          location: "Ташкент",
+          current: false,
+          desc: "Программа со специализацией на frontend: HTML, CSS, JavaScript, TypeScript, React, Git и UI/UX. Завершена с сертификатом Frontend Development (2024).",
+        },
+      ],
+    },
+    press: {
+      title: "Упоминания в прессе",
     },
     footer: {
       credit: "Разработано Саидазимовым Саидисломом",

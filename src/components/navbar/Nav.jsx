@@ -3,7 +3,7 @@ import { FiSun, FiMoon } from "react-icons/fi";
 import { useLanguage } from "../../context/LanguageContext";
 import { useTheme } from "../../context/ThemeContext";
 
-const navKeys = ["home", "about", "skills", "projects", "contact"];
+const navKeys = ["home", "about", "experience", "skills", "projects", "contact"];
 
 const Nav = () => {
   const { t, lang, langs, setLanguage } = useLanguage();
@@ -203,7 +203,7 @@ const Nav = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "32px",
+            gap: "24px",
           }}
           className="nav-desktop"
         >

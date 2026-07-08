@@ -29,3 +29,7 @@ dist-ssr
 
 # Claude Code local settings
 .claude/
+
+# Installed AI design skills (local tooling, not part of the portfolio)
+.agents/
+skills-lock.json
